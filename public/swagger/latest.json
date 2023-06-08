@@ -9,7 +9,7 @@
       "url": "https://brapi.dev/",
       "email": "brapi@proton.me"
     },
-    "version": "2.6.0"
+    "version": "2.8.0"
   },
   "servers": [
     {
@@ -30,7 +30,7 @@
             "schema": {
               "type": "string"
             },
-            "example": "PETR4,MGLU3"
+            "example": "PETR4,^BVSP"
           },
           {
             "name": "range",
@@ -138,6 +138,34 @@
                       "twoHundredDayAverage": 2.60825,
                       "twoHundredDayAverageChange": 0.101750135,
                       "twoHundredDayAverageChangePercent": 0.039010886
+                    },
+                    {
+                      "symbol": "^BVSP",
+                      "shortName": "IBOVESPA",
+                      "longName": "IBOVESPA",
+                      "currency": "BRL",
+                      "regularMarketPrice": 115488.16,
+                      "regularMarketDayHigh": 115978.12,
+                      "regularMarketDayLow": 114610.22,
+                      "regularMarketDayRange": "114610.22 - 115978.12",
+                      "regularMarketChange": 878.0547,
+                      "regularMarketChangePercent": 0.7661233,
+                      "regularMarketTime": "2023-06-07T20:20:00.000Z",
+                      "regularMarketVolume": 0,
+                      "regularMarketPreviousClose": 114610.1,
+                      "regularMarketOpen": 114610.22,
+                      "averageDailyVolume10Day": 11244610,
+                      "averageDailyVolume3Month": 12033282,
+                      "fiftyTwoWeekLowChange": 20221.156,
+                      "fiftyTwoWeekLowChangePercent": 0.21225771,
+                      "fiftyTwoWeekRange": "95267.0 - 120752.0",
+                      "fiftyTwoWeekHighChange": -5263.8438,
+                      "fiftyTwoWeekHighChangePercent": -0.04359219,
+                      "fiftyTwoWeekLow": 95267,
+                      "fiftyTwoWeekHigh": 120752,
+                      "twoHundredDayAverage": 109047.15,
+                      "twoHundredDayAverageChange": 6441.008,
+                      "twoHundredDayAverageChangePercent": 0.059066266
                     }
                   ],
                   "requestedAt": "2022-05-29T03:46:10.808Z"
@@ -161,7 +189,7 @@
             "schema": {
               "type": "string"
             },
-            "example": "cog"
+            "example": "bv"
           }
         ],
         "responses": {
@@ -170,7 +198,8 @@
             "content": {
               "application/json": {
                 "example": {
-                  "stocks": ["COGN3", "COGN3F"]
+                  "indexes": ["^BVSP"],
+                  "stocks": ["RBVA11", "RBVO11", "ABBV34"]
                 }
               }
             }
@@ -235,7 +264,7 @@
             "schema": {
               "type": "string"
             },
-            "example": "COG"
+            "example": "ibo"
           }
         ],
         "responses": {
@@ -244,26 +273,22 @@
             "content": {
               "application/json": {
                 "example": {
+                  "indexes": [
+                    {
+                      "stock": "^BVSP",
+                      "name": "IBOVESPA"
+                    }
+                  ],
                   "stocks": [
                     {
-                      "stock": "PETR4",
-                      "name": "PETROBRAS PN EDJ",
-                      "close": 30.6,
-                      "change": -4.76190773,
-                      "volume": 118295600,
-                      "market_cap": 422521192168,
-                      "logo": "https://s3-symbol-logo.tradingview.com/brasileiro-petrobras--big.svg",
-                      "sector": "Energy Minerals"
-                    },
-                    {
-                      "stock": "OIBR3",
-                      "name": "OI",
-                      "close": 0.76,
-                      "change": 8.57142857,
-                      "volume": 91165400,
-                      "market_cap": 5107338999,
-                      "logo": "https://s3-symbol-logo.tradingview.com/oi--big.svg",
-                      "sector": "Communications"
+                      "stock": "IBOB11",
+                      "name": "PACTUAL IBOVCI",
+                      "close": 93.51,
+                      "change": 0.53757444,
+                      "volume": 2467,
+                      "market_cap": null,
+                      "logo": "https://s3-symbol-logo.tradingview.com/pactual-ibovci--big.svg",
+                      "sector": null
                     }
                   ]
                 }
