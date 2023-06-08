@@ -38,7 +38,8 @@ export const getQuoteList = async (args?: IGetQuoteList) => {
 
     const data = await res.json();
 
-    const limitedIndexes = data?.indexes.slice(0, (args?.limit || 4) / 2);
+    const limitedIndexes =
+      data?.indexes?.slice(0, (args?.limit || 4) / 2) || [];
 
     const mergedData = [...limitedIndexes, ...data?.stocks] as IQuoteList[];
 
