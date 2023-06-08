@@ -34,8 +34,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const responseAllSlugs = async () => {
       const promises = allSlugs.map(async (slug) => {
         try {
+          const isBrazilianStock = /\d/.test(slug);
+
+          const parsedSlug = isBrazilianStock ? `${slug}.SA` : slug;
+
           const response = await axios.get(
-            `https://query1.finance.yahoo.com/v7/finance/options/${slug}.SA`,
+            `https://query1.finance.yahoo.com/v7/finance/options/${parsedSlug}`,
           );
 
           let fundamentalInformation = [];
@@ -143,7 +147,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           const getHistory = async () => {
             try {
               const historicalResponse = await axios.get(
-                `https://query1.finance.yahoo.com/v8/finance/chart/${slug}.SA${
+                `https://query1.finance.yahoo.com/v8/finance/chart/${parsedSlug}${
                   interval && range
                     ? `?includePrePost=false&interval=${interval}&useYfid=true&range=${range}`
                     : '?includePrePost=false&interval=1d&useYfid=true&range=1mo'
@@ -225,10 +229,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             };
 
             if (fundamental) {
-              historicalQuote.priceEarnings = fundamentalInformation[0][0];
-              historicalQuote.earningsPerShare = fundamentalInformation[0][1];
-              historicalQuote.logourl = fundamentalInformation[0][2]
-                ? `https://s3-symbol-logo.tradingview.com/${fundamentalInformation[0][2]}--big.svg`
+              historicalQuote.priceEarnings = fundamentalInformation?.[0]?.[0];
+              historicalQuote.earningsPerShare =
+                fundamentalInformation?.[0]?.[1];
+              historicalQuote.logourl = fundamentalInformation?.[0]?.[2]
+                ? `https://s3-symbol-logo.tradingview.com/${fundamentalInformation?.[0]?.[2]}--big.svg`
                 : 'https://brapi.dev/favicon.svg';
             }
 
@@ -273,10 +278,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           };
 
           if (fundamental) {
-            quote.priceEarnings = fundamentalInformation[0][0];
-            quote.earningsPerShare = fundamentalInformation[0][1];
-            quote.logourl = fundamentalInformation[0][2]
-              ? `https://s3-symbol-logo.tradingview.com/${fundamentalInformation[0][2]}--big.svg`
+            quote.priceEarnings = fundamentalInformation?.[0]?.[0];
+            quote.earningsPerShare = fundamentalInformation?.[0]?.[1];
+            quote.logourl = fundamentalInformation?.[0]?.[2]
+              ? `https://s3-symbol-logo.tradingview.com/${fundamentalInformation?.[0]?.[2]}--big.svg`
               : 'https://brapi.dev/favicon.svg';
           }
 
@@ -288,6 +293,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             return quote;
           }
         } catch (err) {
+          console.log({ err });
           return {
             symbol: slug.toString().toUpperCase(),
             error: true,

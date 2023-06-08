@@ -167,8 +167,11 @@ export const SearchResult = (props: ISearchResult) => {
       title={name}
     >
       <img
-        src={logo}
-        className="w-10 h-10 rounded-full"
+        src={logo || '/favicon.svg'}
+        className={clsx({
+          'w-10 h-10': true,
+          'rounded-full': logo,
+        })}
         alt={name}
         width={40}
         height={40}
@@ -179,15 +182,17 @@ export const SearchResult = (props: ISearchResult) => {
         </p>
         <p className="text-sm">
           <span>{stock} </span>
-          <span
-            className={clsx({
-              'text-green-500': change > 0,
-              'text-red-500': change < 0,
-            })}
-          >
-            {change > 0 ? '▲' : '▼'}
-            {Math.abs(change).toFixed(2)}%
-          </span>{' '}
+          {change?.toString().length ? (
+            <span
+              className={clsx({
+                'text-green-500': change > 0,
+                'text-red-500': change < 0,
+              })}
+            >
+              {change > 0 ? '▲' : '▼'}
+              {Math.abs(change).toFixed(2)}%
+            </span>
+          ) : null}{' '}
           | <span>{numberToMoney(close)}</span>
         </p>
       </div>

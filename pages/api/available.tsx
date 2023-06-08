@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { logHost } from '../../utils/logHost';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { availableIndexes } from '~/utils/availableIndexes';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   logHost(req, 'available');
@@ -50,7 +51,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const uniqueStocks = [...new Set(paths)];
 
+  const indexes = Object.values(availableIndexes).map((index) => {
+    return index.stock;
+  });
+
+  const sortedIndexes = indexes.sort((a, b) => a.localeCompare(b));
+
+  const filteredIndexes = sortedIndexes.filter((index) =>
+    index.toLowerCase().includes(search?.toString().toLowerCase() || ''),
+  );
+
   res.status(200).json({
+    indexes: filteredIndexes,
     stocks: uniqueStocks,
   });
 };
