@@ -1,5 +1,9 @@
 export const availableIndexes = [
   {
+    stock: 'IFIX.SA',
+    name: 'IND FDO IMOB',
+  },
+  {
     stock: '^TWII',
     name: 'TSEC weighted index',
   },
