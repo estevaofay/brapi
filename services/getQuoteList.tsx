@@ -17,6 +17,7 @@ interface IGetQuoteList {
     | 'volume'
     | 'market_cap_basic';
   sortOrder?: 'desc' | 'asc';
+  hideIndex?: boolean;
 }
 
 export const getQuoteList = async (args?: IGetQuoteList) => {
@@ -37,6 +38,10 @@ export const getQuoteList = async (args?: IGetQuoteList) => {
     const res = await fetch(url.toString(), { cache: 'no-cache' });
 
     const data = await res.json();
+
+    if (!data) return [];
+
+    if (args?.hideIndex) return data?.stocks as IQuoteList[];
 
     const limitedIndexes =
       data?.indexes?.slice(0, (args?.limit || 4) / 2) || [];
