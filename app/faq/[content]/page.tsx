@@ -14,7 +14,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   const filePath = path.join(allFAQPaths, file);
   const fileContents = matter.read(filePath);
 
-  const title = fileContents?.data?.title + ' | brapi';
+  const title = fileContents?.data?.title;
   const description =
     fileContents?.content?.substring(0, 150).replace(/\s+\S*$/, '') + '...';
 
