@@ -162,6 +162,8 @@ afetada por estes valores, assim como demais endpoints da API.
 ## Desenvolvedor
 
 - Twitter - [@alissonsleal](https://twitter.com/alissonsleal)
+- LinkedIn - [/company/brapi.dev](https://www.linkedin.com/company/brapi.dev)
+- LinkedIn - [alissonsleal](https://www.linkedin.com/in/alissonsleal)
 - Email - [brapi@proton.me](mailto:brapi@proton.me)
 - StackOverflow - [Alisson Leal](https://stackoverflow.com/users/14122260/alisson-leal)
 

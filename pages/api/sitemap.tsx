@@ -1,5 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getQuoteList } from '~/services/getQuoteList';
+import fs from 'fs';
+import path from 'path';
+
+const rootDir = process.cwd();
+
+const allFAQPaths = path.join(rootDir, 'content');
+const allFAQFiles = fs.readdirSync(allFAQPaths);
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const stockList = await getQuoteList({ limit: 5000 });
@@ -49,6 +56,31 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       <changefreq>monthly</changefreq>
       <priority>0.9</priority>
     </url>
+    <url>
+      <loc>https://brapi.dev/faq</loc>
+      <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.9</priority>
+    </url>
+    ${allFAQFiles
+      .map((file) => {
+        if (!file.endsWith('.mdx')) {
+          return null;
+        }
+
+        const slug = file.replace('.mdx', '');
+        const url = `https://brapi.dev/faq/${slug}`;
+
+        return `
+        <url>
+          <loc>${url}</loc>
+          <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+          <changefreq>monthly</changefreq>
+          <priority>0.8</priority>
+        </url>
+      `;
+      })
+      .join('\n')}
     ${stockList
       .map(
         (stock) => `

@@ -7,11 +7,15 @@ const companyLinks = [
     label: 'Sobre',
   },
   {
+    href: '/faq',
+    label: 'Perguntas Frequentes',
+  },
+  {
     href: '/contact',
     label: 'Contato',
   },
   {
-    href: '/career',
+    href: 'https://www.linkedin.com/company/brapi.dev/jobs',
     label: 'Carreira',
   },
   {

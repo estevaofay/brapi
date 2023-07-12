@@ -107,7 +107,9 @@ affected by these values, as well as other API endpoints.
 ## Author Info
 
 - Twitter - [@alissonsleal](https://twitter.com/alissonsleal)
-- Discord - [Alisson#0629](https://discord.com/)
+- LinkedIn - [/company/brapi.dev](https://www.linkedin.com/company/brapi.dev)
+- LinkedIn - [alissonsleal](https://www.linkedin.com/in/alissonsleal)
+- Email - [brapi@proton.me](mailto:brapi@proton.me)
 - StackOverflow - [Alisson Leal](https://stackoverflow.com/users/14122260/alisson-leal)
 
 [Go to the top 🚀](#brapi)
