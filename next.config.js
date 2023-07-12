@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+const nextConfig = {
   swcMinify: true,
   experimental: {
     scrollRestoration: true,
@@ -26,3 +26,6 @@ module.exports = {
     ];
   },
 };
+
+const withMDX = require('@next/mdx')();
+module.exports = withMDX(nextConfig);
