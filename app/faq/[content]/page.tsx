@@ -2,10 +2,35 @@ import NextLink from 'next/link';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import * as matter from 'gray-matter';
 import path from 'path';
+import { Metadata } from 'next';
+import { createOg } from '~/utils/og';
 
 const rootDir = process.cwd();
 
-const allFAQPaths = path.join(rootDir, 'app', 'faq', '[content]');
+const allFAQPaths = path.join(rootDir, 'content');
+
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const file = `${params.content}.mdx`;
+  const filePath = path.join(allFAQPaths, file);
+  const fileContents = matter.read(filePath);
+
+  const title = fileContents?.data?.title + ' | brapi';
+  const description =
+    fileContents?.content?.substring(0, 150).replace(/\s+\S*$/, '') + '...';
+
+  return {
+    title,
+    description,
+    openGraph: {
+      ...createOg(fileContents?.data?.title),
+    },
+    applicationName: 'brapi',
+    twitter: {
+      card: 'summary_large_image',
+      title,
+    },
+  };
+}
 
 export default function FAQContentPage({
   params,

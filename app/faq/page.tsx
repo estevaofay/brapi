@@ -3,10 +3,12 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { read } from 'gray-matter';
 import fs from 'fs';
 import path from 'path';
+import { Metadata } from 'next';
+import { createOg } from '~/utils/og';
 
 const rootDir = process.cwd();
 
-const allFAQPaths = path.join(rootDir, 'app', 'faq', '[content]');
+const allFAQPaths = path.join(rootDir, 'content');
 const allFAQFiles = fs.readdirSync(allFAQPaths);
 
 const allFAQs = allFAQFiles.map((file) => {
@@ -23,6 +25,13 @@ const allFAQs = allFAQFiles.map((file) => {
   };
 });
 
+export const metadata: Metadata = {
+  title: 'Perguntas Frequentes',
+  openGraph: {
+    ...createOg('Perguntas Frequentes'),
+  },
+};
+
 export default function FAQPage() {
   return (
     <main>
@@ -33,8 +42,6 @@ export default function FAQPage() {
               return null;
             }
 
-            console.log({ faq });
-            // excerpt is the first 150 characters complete words
             const excerpt =
               faq?.content?.substring(0, 150).replace(/\s+\S*$/, '') + '...';
 
