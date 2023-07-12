@@ -51,6 +51,7 @@ export const MainContact = () => {
                     Nome
                   </label>
                   <input
+                    required
                     type="text"
                     id="name"
                     name="name"
@@ -68,6 +69,7 @@ export const MainContact = () => {
                     Email
                   </label>
                   <input
+                    required
                     type="email"
                     id="email"
                     name="email"
@@ -85,6 +87,7 @@ export const MainContact = () => {
                     Mensagem
                   </label>
                   <textarea
+                    required
                     id="message"
                     name="message"
                     placeholder="Olá, gostaria de saber mais sobre a brapi."
