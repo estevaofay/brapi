@@ -1,6 +1,6 @@
 import { Testimonials } from '~/components/Main/Testimonials';
 import { SideScroller } from '~/components/MainQuotes/SideScroller';
-import { Brands } from './Brands';
+import { TrustedBy } from '~/components/Main/TrustedBy';
 import { CTA } from './CTA';
 import { Features } from './Features';
 import { Hero } from './Hero';
@@ -14,7 +14,7 @@ const Main = async () => {
       <SideScroller />
       <Hero />
       <WhatWeDo />
-      <Brands />
+      <TrustedBy />
       <Features />
       <Testimonials />
       <Numbers />
