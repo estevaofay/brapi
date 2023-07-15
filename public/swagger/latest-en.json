@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "brapi - API do mercado financeiro brasileiro",
-    "description": "Tenha acesso instantâneo aos valores da cotação da bolsa de valores, dados históricos e até dados de criptomoedas em diferentes moedas\n\n**https://brapi.dev**",
+    "title": "brapi - Brazilian Stock Market API",
+    "description": "Get instant access to stock quotes, historical data and even cryptocurrency data in different currencies\n\n**https://brapi.dev**",
     "termsOfService": "/terms-of-use",
     "contact": {
       "name": "brapi",
@@ -19,13 +19,13 @@
   "paths": {
     "/api/quote/{tickers}": {
       "get": {
-        "tags": ["Ações"],
-        "summary": "Cotação de ações",
+        "tags": ["ticker"],
+        "summary": "Get any tickers information",
         "parameters": [
           {
             "name": "tickers",
             "in": "path",
-            "description": "Lista de tickers separados por vírgula",
+            "description": "Add one or more tickers separated by a comma",
             "required": true,
             "schema": {
               "type": "string"
@@ -35,7 +35,7 @@
           {
             "name": "range",
             "in": "query",
-            "description": "Range de tempo para obter os dados",
+            "description": "Range for historical prices",
             "required": false,
             "style": "form",
             "schema": {
@@ -59,7 +59,7 @@
           {
             "name": "interval",
             "in": "query",
-            "description": "Intervalo de tempo entre os dados",
+            "description": "Interval to get historial prices within the range",
             "required": false,
             "style": "form",
             "schema": {
@@ -83,7 +83,7 @@
           {
             "name": "fundamental",
             "in": "query",
-            "description": "Buscar dados fundamentais",
+            "description": "Retrieve fundamental analysis data",
             "required": false,
             "style": "form",
             "schema": {
@@ -94,7 +94,7 @@
           {
             "name": "dividends",
             "in": "query",
-            "description": "Buscar dividendos",
+            "description": "Retrieve dividends data",
             "required": false,
             "style": "form",
             "schema": {
@@ -105,7 +105,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "example": {
@@ -178,13 +178,12 @@
     },
     "/api/available": {
       "get": {
-        "tags": ["Ações"],
-        "summary": "Obter uma lista de todos os tickers disponíveis",
+        "tags": ["ticker"],
+        "summary": "Get all available tickers",
         "parameters": [
           {
             "name": "search",
             "in": "query",
-            "description": "Buscar ações por ticker",
             "required": false,
             "style": "form",
             "schema": {
@@ -195,7 +194,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "example": {
@@ -210,13 +209,13 @@
     },
     "/api/quote/list": {
       "get": {
-        "tags": ["Ações"],
-        "summary": "Obter um resumo de todos os tickers",
+        "tags": ["ticker"],
+        "summary": "Get a summary of all tickers",
         "parameters": [
           {
             "name": "sortBy",
             "in": "query",
-            "description": "Ordenar os tickers por um tipo",
+            "description": "Sort the tickers by a column",
             "required": false,
             "style": "form",
             "schema": {
@@ -236,7 +235,7 @@
           {
             "name": "sortOrder",
             "in": "query",
-            "description": "Ordenar os tickers em ordem crescente ou decrescente",
+            "description": "Sort order for sortBy",
             "required": false,
             "style": "form",
             "schema": {
@@ -248,7 +247,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Limitar a quantidade de tickers",
+            "description": "Limit the returned tickers",
             "required": false,
             "style": "form",
             "schema": {
@@ -259,7 +258,7 @@
           {
             "name": "search",
             "in": "query",
-            "description": "Buscar por um ticker",
+            "description": "Search for a ticker",
             "required": false,
             "style": "form",
             "schema": {
@@ -270,7 +269,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "example": {
@@ -301,13 +300,13 @@
     },
     "/api/v2/crypto": {
       "get": {
-        "tags": ["Crypto"],
-        "summary": "Obter informações de qualquer criptomoeda",
+        "tags": ["crypto"],
+        "summary": "Get any crypto information",
         "parameters": [
           {
             "name": "coin",
             "in": "query",
-            "description": "Adicione uma ou mais criptomoedas separadas por vírgula. Criptomoedas disponíveis em: https://brapi.dev/api/v2/crypto/available",
+            "description": "Add one or more cryptocoin separated by a comma. Available coins at: https://brapi.dev/api/v2/crypto/available",
             "required": true,
             "style": "form",
             "schema": {
@@ -318,7 +317,7 @@
           {
             "name": "currency",
             "in": "query",
-            "description": "Moeda para ser retornada. Moedas disponíveis em: https://economia.awesomeapi.com.br/json/available/uniq",
+            "description": "Currency value to be returned. Available currencies at: https://economia.awesomeapi.com.br/json/available/uniq",
             "required": false,
             "style": "form",
             "schema": {
@@ -329,7 +328,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "example": {
@@ -376,13 +375,13 @@
     },
     "/api/v2/crypto/available": {
       "get": {
-        "tags": ["Crypto"],
-        "summary": "Obter todas as criptomoedas disponíveis",
+        "tags": ["crypto"],
+        "summary": "Get all available cryptocoins",
         "parameters": [
           {
             "name": "search",
             "in": "query",
-            "description": "Buscar todas as criptomoedas que começam com a consulta, se nenhuma consulta for passada, todas as moedas são retornadas",
+            "description": "Search all cryptocoins that starts with the query, if no query is passed then all coins are returned",
             "required": false,
             "style": "form",
             "schema": {
@@ -393,7 +392,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "example": {
@@ -403,7 +402,7 @@
             }
           },
           "404": {
-            "description": "Moeda não encontrada",
+            "description": "Coin not found",
             "content": {
               "application/json": {
                 "example": {
@@ -417,13 +416,13 @@
     },
     "/api/v2/currency": {
       "get": {
-        "tags": ["Moeda"],
-        "summary": "Obter informações de conversão de moeda",
+        "tags": ["currency"],
+        "summary": "Get currency conversion information",
         "parameters": [
           {
             "name": "currency",
             "in": "query",
-            "description": "De uma moeda para outra moeda. Moedas disponíveis em: https://brapi.dev/api/v2/currency/available",
+            "description": "Currency to another currency. Available currencies at: https://brapi.dev/api/v2/currency/available",
             "required": true,
             "style": "form",
             "schema": {
@@ -434,7 +433,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "example": {
@@ -475,13 +474,13 @@
     },
     "/api/v2/inflation": {
       "get": {
-        "tags": ["Inflação"],
-        "summary": "Obter o histórico da inflação de um determinado país",
+        "tags": ["inflation"],
+        "summary": "Get the history of the inflation of a certain country",
         "parameters": [
           {
             "name": "country",
             "in": "query",
-            "description": "Obter dados de um determinado país, padrão para 'brazil'",
+            "description": "Get data for a certain country, defaults to 'brazil'",
             "required": false,
             "style": "form",
             "schema": {
@@ -492,7 +491,7 @@
           {
             "name": "historical",
             "in": "query",
-            "description": "Obter dados históricos de um determinado país, padrão para 'false'",
+            "description": "Get historical data for a certain country, defaults to 'false'",
             "required": false,
             "style": "form",
             "schema": {
@@ -503,7 +502,7 @@
           {
             "name": "start",
             "in": "query",
-            "description": "Obter dados históricos a partir de uma determinada data, padrão para a data de hoje (DD/MM/YYYY)",
+            "description": "Get historical data from a certain date, defaults to today's date (DD/MM/YYYY)",
             "required": false,
             "style": "form",
             "schema": {
@@ -514,7 +513,7 @@
           {
             "name": "end",
             "in": "query",
-            "description": "Obter dados históricos até uma determinada data, padrão para a data de hoje (DD/MM/YYYY)",
+            "description": "Get historical data until a certain date, defaults to today's date (DD/MM/YYYY)",
             "required": false,
             "style": "form",
             "schema": {
@@ -525,7 +524,7 @@
           {
             "name": "sortBy",
             "in": "query",
-            "description": "Classifique os dados por uma coluna, padrão para 'date'",
+            "description": "Sort the data by a column, defaults to 'date'",
             "required": false,
             "style": "form",
             "schema": {
@@ -537,7 +536,7 @@
           {
             "name": "sortOrder",
             "in": "query",
-            "description": "Ordem de classificação para sortBy, padrão para 'desc'",
+            "description": "Sort order for sortBy, defaults to 'desc'",
             "required": false,
             "style": "form",
             "schema": {
@@ -549,7 +548,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "example": {
@@ -569,13 +568,13 @@
     },
     "/api/v2/inflation/available": {
       "get": {
-        "tags": ["Inflação"],
-        "summary": "Obter todos os países de inflação suportados disponíveis",
+        "tags": ["inflation"],
+        "summary": "Get all available supported inflation countries",
         "parameters": [
           {
             "name": "search",
             "in": "query",
-            "description": "Encontre todos os possíveis países de inflação suportados, se nenhuma consulta for passada, todos os países de inflação suportados serão retornados",
+            "description": "Find all possible supported inflation countries, if no query is passed then all supported inflation countries are returned",
             "required": false,
             "style": "form",
             "schema": {
@@ -586,7 +585,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "example": {
@@ -596,7 +595,7 @@
             }
           },
           "404": {
-            "description": "País não encontrado",
+            "description": "Country not found",
             "content": {
               "application/json": {
                 "example": {
@@ -610,13 +609,13 @@
     },
     "/api/v2/prime-rate": {
       "get": {
-        "tags": ["Taxa básica de juros (SELIC)"],
-        "summary": "Obter o histórico da taxa básica de juros (SELIC) de um determinado país",
+        "tags": ["prime-rate (SELIC)"],
+        "summary": "Get the history of the prime-rate of a certain country",
         "parameters": [
           {
             "name": "country",
             "in": "query",
-            "description": "Obter dados de um determinado país, padrão para 'brazil'",
+            "description": "Get data for a certain country, defaults to 'brazil'",
             "required": false,
             "style": "form",
             "schema": {
@@ -627,7 +626,7 @@
           {
             "name": "historical",
             "in": "query",
-            "description": "Obter dados históricos de um determinado país, padrão para 'false'",
+            "description": "Get historical data for a certain country, defaults to 'false'",
             "required": false,
             "style": "form",
             "schema": {
@@ -638,7 +637,7 @@
           {
             "name": "start",
             "in": "query",
-            "description": "Obter dados históricos a partir de uma determinada data, padrão para a data de hoje (DD/MM/YYYY)",
+            "description": "Get historical data from a certain date, defaults to today's date (DD/MM/YYYY)",
             "required": false,
             "style": "form",
             "schema": {
@@ -649,7 +648,7 @@
           {
             "name": "end",
             "in": "query",
-            "description": "Obter dados históricos até uma determinada data, padrão para a data de hoje (DD/MM/YYYY)",
+            "description": "Get historical data until a certain date, defaults to today's date (DD/MM/YYYY)",
             "required": false,
             "style": "form",
             "schema": {
@@ -660,7 +659,7 @@
           {
             "name": "sortBy",
             "in": "query",
-            "description": "Ordena os dados por uma coluna, padrão para 'date'",
+            "description": "Sort the data by a column, defaults to 'date'",
             "required": false,
             "style": "form",
             "schema": {
@@ -672,7 +671,7 @@
           {
             "name": "sortOrder",
             "in": "query",
-            "description": "Ordem de classificação para sortBy, padrão para 'desc'",
+            "description": "Sort order for sortBy, defaults to 'desc'",
             "required": false,
             "style": "form",
             "schema": {
@@ -684,7 +683,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "example": {
@@ -704,13 +703,13 @@
     },
     "/api/v2/prime-rate/available": {
       "get": {
-        "tags": ["Taxa básica de juros (SELIC)"],
-        "summary": "Obter todas as taxas básicas de juros (SELIC) dos países suportados",
+        "tags": ["prime-rate (SELIC)"],
+        "summary": "Get all available supported countries' prime-rates",
         "parameters": [
           {
             "name": "search",
             "in": "query",
-            "description": "Encontre todas as taxas básicas de juros (SELIC) dos países suportados, se nenhuma consulta for passada, todas as taxas básicas de juros (SELIC) dos países suportados serão retornadas",
+            "description": "Find all possible supported countries' prime-rates, if no query is passed then all supported countries' prime-rates are returned",
             "required": false,
             "style": "form",
             "schema": {
@@ -721,7 +720,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "example": {
@@ -731,7 +730,7 @@
             }
           },
           "404": {
-            "description": "País não encontrado",
+            "description": "Country not found",
             "content": {
               "application/json": {
                 "example": {
@@ -745,13 +744,13 @@
     },
     "/api/v2/currency/available": {
       "get": {
-        "tags": ["Moeda"],
-        "summary": "Obter todas as moedas disponíveis",
+        "tags": ["currency"],
+        "summary": "Get all available currencies",
         "parameters": [
           {
             "name": "search",
             "in": "query",
-            "description": "Encontre todas as possíveis conversões de moeda, se nenhuma consulta for passada, todas as moedas serão retornadas",
+            "description": "Find all possible currency conversions, if no query is passed then all currencies are returned",
             "required": false,
             "style": "form",
             "schema": {
@@ -762,7 +761,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "example": {
@@ -781,7 +780,7 @@
             }
           },
           "404": {
-            "description": "Moeda não encontrada",
+            "description": "Currency not found",
             "content": {
               "application/json": {
                 "example": {
