@@ -1,3 +1,4 @@
+import { Testimonials } from '~/components/Main/Testimonials';
 import { SideScroller } from '~/components/MainQuotes/SideScroller';
 import { Brands } from './Brands';
 import { CTA } from './CTA';
@@ -15,6 +16,7 @@ const Main = async () => {
       <WhatWeDo />
       <Brands />
       <Features />
+      <Testimonials />
       <Numbers />
       <CTA />
     </main>
