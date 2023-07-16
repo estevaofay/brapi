@@ -62,7 +62,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         }}
       />
 
-      <body>
+      <body className="bg-gray-900">
         <Header />
         {children}
         <Analytics />
