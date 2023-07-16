@@ -37,7 +37,7 @@ const testimonials: ITestimonialCard[] = [
     title: 'Diretor de Desenvolvimento',
     company: 'Projetus TI',
     description:
-      'Fantástico! Gostei demais da Brapi, vai ajudar muito. Parabéns pelo iniciativa. Estava pesquisando APIs e não é muito simples.',
+      'Fantástico! Gostei demais da Brapi, vai ajudar muito. Parabéns pela iniciativa. Estava pesquisando APIs e não é muito simples.',
   },
   {
     name: 'Alex Ronchi',
