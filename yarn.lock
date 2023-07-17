@@ -1094,11 +1094,6 @@ chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.4.tgz#6fc9d7b42d32a583596337666e7d08084da2cc6b"
   integrity sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
 
-clarity-js@^0.7.8:
-  version "0.7.8"
-  resolved "https://registry.yarnpkg.com/clarity-js/-/clarity-js-0.7.8.tgz#6b421522a6feee0ee410b8c2dc2ebe271a965388"
-  integrity sha512-iNYpEQzLTZU0QtO2fBtH9QhBzvLKXAhUH12gsMjhA6k/a1kVsqZ1HKfMh5eWfHywKwPfVWdxsCF0t5dET9sbWQ==
-
 classnames@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"

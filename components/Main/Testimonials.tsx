@@ -77,7 +77,7 @@ export const Testimonials = () => {
       <div className="container px-5 py-24 mx-auto">
         <div className="[column-fill:_balance] sm:columns-2 sm:gap-6 lg:columns-3 lg:gap-8">
           {testimonials.map((testimonial) => (
-            <TestimonialCard {...testimonial} />
+            <TestimonialCard key={testimonial.name} {...testimonial} />
           ))}
         </div>
       </div>

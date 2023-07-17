@@ -37,6 +37,13 @@ export const metadata: Metadata = {
   viewport: 'width=device-width, initial-scale=1',
 };
 
+const clarityCode = `
+(function (c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "i08gpgdcs7");`;
+
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-BR">
@@ -61,6 +68,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           `,
         }}
       />
+      <Script id="ms-clarity" strategy="beforeInteractive">
+        {clarityCode}
+      </Script>
 
       <body className="bg-gray-900">
         <Header />
