@@ -14,7 +14,7 @@ export const MainContact = () => {
           <div className="flex flex-wrap -m-2">
             <form
               className="flex flex-wrap -m-2"
-              action="https://formsubmit.co/166feb7796ce3daa45ec9848d1ae062e"
+              action="https://formsubmit.co/contato@brapi.dev"
               method="POST"
             >
               <input

@@ -79,7 +79,7 @@ const Footer = () => {
               brasileiro.
             </p>
             <form
-              action="https://formsubmit.co/166feb7796ce3daa45ec9848d1ae062e"
+              action="https://formsubmit.co/contato@brapi.dev"
               method="POST"
               className="relative sm:w-64 w-full max-w-full min-w-[200px] sm:mr-4 mr-2"
             >
