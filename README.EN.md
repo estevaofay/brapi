@@ -109,7 +109,7 @@ affected by these values, as well as other API endpoints.
 - Twitter - [@alissonsleal](https://twitter.com/alissonsleal)
 - LinkedIn - [/company/brapi.dev](https://www.linkedin.com/company/brapi.dev)
 - LinkedIn - [alissonsleal](https://www.linkedin.com/in/alissonsleal)
-- Email - [brapi@proton.me](mailto:brapi@proton.me)
+- Email - [contato@brapi.dev](mailto:contato@brapi.dev)
 - StackOverflow - [Alisson Leal](https://stackoverflow.com/users/14122260/alisson-leal)
 
 [Go to the top 🚀](#brapi)

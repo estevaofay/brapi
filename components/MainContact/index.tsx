@@ -103,7 +103,7 @@ export const MainContact = () => {
               <div className="w-fit flex flex-col">
                 <span className="leading-normal hover:text-white">
                   <a
-                    href="mailto:brapi@proton.me"
+                    href="mailto:contato@brapi.dev"
                     className="text-primary-400 flex space-x-2 items-center"
                   >
                     <svg
@@ -119,7 +119,7 @@ export const MainContact = () => {
                       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                       <polyline points="22,6 12,13 2,6"></polyline>
                     </svg>
-                    <span>brapi@proton.me</span>
+                    <span>contato@brapi.dev</span>
                   </a>
                 </span>
 

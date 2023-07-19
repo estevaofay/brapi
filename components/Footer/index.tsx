@@ -132,13 +132,13 @@ const Footer = () => {
             <p className="text-gray-400 text-sm text-center sm:text-left flex justify-center space-x-2">
               © {new Date().getFullYear()} brapi —
               <a
-                href="mailto:brapi@proton.me"
+                href="mailto:contato@brapi.dev"
                 className="text-gray-400 ml-1 hover:text-white"
                 target="_blank"
                 rel="noopener noreferrer"
                 tabIndex={0}
               >
-                brapi@proton.me
+                contato@brapi.dev
               </a>
               <a
                 href="https://github.com/alissonsleal/brapi"
