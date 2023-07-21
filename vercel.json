@@ -15,5 +15,19 @@
         }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "pages/api/quote/[slugs].tsx": {
+      "memory": 1024,
+      "maxDuration": 10
+    },
+    "pages/api/v2/currency/index.ts": {
+      "memory": 1024,
+      "maxDuration": 10
+    },
+    "pages/api/v2/crypto/index.ts": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
 }
