@@ -4,6 +4,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { QuoteProps } from '../../../@types/QuoteProps';
 import { parseDMY } from '~/utils/parseDMY';
 import { replaceComma } from '~/utils/replaceComma';
+import {
+  getFundamentalInformation,
+  IGetFundamentalInformationResponse,
+} from '~/services/getFundamentalInformation';
 
 interface LooseObject {
   [key: string]: any;
@@ -42,36 +46,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             `https://query1.finance.yahoo.com/v7/finance/options/${parsedSlug}`,
           );
 
-          let fundamentalInformation = [];
+          let fundamentalInformation: IGetFundamentalInformationResponse = null;
           let dividendsData = {};
 
           if (fundamental) {
-            const formDataTradingView = {
-              symbols: {
-                tickers: [`BMFBOVESPA:${slug.toUpperCase()}`],
-                query: {
-                  types: [],
-                },
-              },
-              columns: [
-                'price_earnings_ttm',
-                'earnings_per_share_basic_ttm',
-                'logoid',
-              ],
-            };
-
             try {
-              const responseTradingView = await axios.post(
-                `https://scanner.tradingview.com/brazil/scan`,
-                formDataTradingView,
+              const fundamentalInformationData = await getFundamentalInformation(
                 {
-                  headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                  },
+                  slug,
                 },
               );
 
-              fundamentalInformation.push(responseTradingView.data.data[0].d);
+              fundamentalInformation = fundamentalInformationData;
             } catch (error) {
               console.log(error?.message);
             }
@@ -231,11 +217,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             };
 
             if (fundamental) {
-              historicalQuote.priceEarnings = fundamentalInformation?.[0]?.[0];
+              historicalQuote.priceEarnings =
+                fundamentalInformation?.earningsPerShare;
               historicalQuote.earningsPerShare =
-                fundamentalInformation?.[0]?.[1];
-              historicalQuote.logourl = fundamentalInformation?.[0]?.[2]
-                ? `https://s3-symbol-logo.tradingview.com/${fundamentalInformation?.[0]?.[2]}--big.svg`
+                fundamentalInformation?.earningsPerShare;
+              historicalQuote.logourl = fundamentalInformation?.logourl
+                ? `https://s3-symbol-logo.tradingview.com/${fundamentalInformation?.logourl}--big.svg`
                 : 'https://brapi.dev/favicon.svg';
             }
 
@@ -280,10 +267,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           };
 
           if (fundamental) {
-            quote.priceEarnings = fundamentalInformation?.[0]?.[0];
-            quote.earningsPerShare = fundamentalInformation?.[0]?.[1];
-            quote.logourl = fundamentalInformation?.[0]?.[2]
-              ? `https://s3-symbol-logo.tradingview.com/${fundamentalInformation?.[0]?.[2]}--big.svg`
+            quote.priceEarnings = fundamentalInformation?.earningsPerShare;
+            quote.earningsPerShare = fundamentalInformation?.earningsPerShare;
+            quote.logourl = fundamentalInformation?.logourl
+              ? `https://s3-symbol-logo.tradingview.com/${fundamentalInformation?.logourl}--big.svg`
               : 'https://brapi.dev/favicon.svg';
           }
 
