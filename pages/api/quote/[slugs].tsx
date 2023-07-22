@@ -10,6 +10,7 @@ import {
   getDividendsInformation,
   IGetDividendsInformationResponse,
 } from '~/services/getDividendsInformation';
+import { getHistoricalData } from '~/services/getHistoricalData';
 
 interface LooseObject {
   [key: string]: any;
@@ -59,57 +60,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             dividendsData = await getDividendsInformation({ slug });
           }
 
-          const getHistory = async () => {
-            try {
-              const historicalResponse = await axios.get(
-                `https://query1.finance.yahoo.com/v8/finance/chart/${parsedSlug}${
-                  interval && range
-                    ? `?includePrePost=false&interval=${interval}&useYfid=true&range=${range}`
-                    : '?includePrePost=false&interval=1d&useYfid=true&range=1mo'
-                }`,
-              );
-
-              const { timestamp } = await historicalResponse.data.chart
-                .result[0];
-              const {
-                low,
-                high,
-                open,
-                close,
-                volume,
-              } = await historicalResponse.data.chart.result[0].indicators
-                .quote[0];
-
-              const { adjclose: adjustedClose } =
-                (await historicalResponse.data.chart.result[0].indicators
-                  .adjclose[0]) || {};
-
-              const prices: Array<{}> = [];
-              for (let index = 0; index < timestamp.length; index++) {
-                const price = {
-                  date: timestamp[index],
-                  open: open[index] || null,
-                  high: high[index] || null,
-                  low: low[index] || null,
-                  close: close[index] || null,
-                  volume: volume[index] || null,
-                  adjustedClose: adjustedClose[index] || null,
-                };
-
-                prices.push(price);
-              }
-
-              return prices;
-            } catch (error) {
-              console.log(error?.message);
-            }
-          };
-
           const data: QuoteProps = await response.data.optionChain.result[0]
             .quote;
 
           if (interval && range) {
-            const historicalData = await getHistory();
+            const historicalData = await getHistoricalData({
+              slug: parsedSlug,
+              interval: interval.toString(),
+              range: range.toString(),
+            });
+
             const historicalQuote: LooseObject = {
               symbol: slug.toString().toUpperCase(),
               shortName: data.shortName,
