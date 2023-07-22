@@ -2,12 +2,14 @@ import axios from 'axios';
 import { logHost } from '../../../utils/logHost';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { QuoteProps } from '../../../@types/QuoteProps';
-import { parseDMY } from '~/utils/parseDMY';
-import { replaceComma } from '~/utils/replaceComma';
 import {
   getFundamentalInformation,
   IGetFundamentalInformationResponse,
 } from '~/services/getFundamentalInformation';
+import {
+  getDividendsInformation,
+  IGetDividendsInformationResponse,
+} from '~/services/getDividendsInformation';
 
 interface LooseObject {
   [key: string]: any;
@@ -47,89 +49,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           );
 
           let fundamentalInformation: IGetFundamentalInformationResponse = null;
-          let dividendsData = {};
+          let dividendsData: IGetDividendsInformationResponse = null;
 
           if (fundamental) {
-            try {
-              const fundamentalInformationData = await getFundamentalInformation(
-                {
-                  slug,
-                },
-              );
-
-              fundamentalInformation = fundamentalInformationData;
-            } catch (error) {
-              console.log(error?.message);
-            }
+            fundamentalInformation = await getFundamentalInformation({ slug });
           }
 
           if (dividends) {
-            const jwtHeader = {
-              identifierFund: slug,
-            };
-
-            const jwtHeaderString = Buffer.from(
-              JSON.stringify(jwtHeader),
-            ).toString('base64');
-
-            try {
-              const responseDividends = await axios.get(
-                `https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListedSupplementFunds/${jwtHeaderString}`,
-              );
-
-              const { cashDividends, stockDividends, subscriptions } =
-                responseDividends?.data || {};
-
-              const dividendParser = (eachDividend) => {
-                return {
-                  ...eachDividend,
-                  ...(eachDividend?.paymentDate && {
-                    paymentDate: new Date(parseDMY(eachDividend?.paymentDate)),
-                  }),
-                  ...(eachDividend?.approvedOn && {
-                    approvedOn: new Date(parseDMY(eachDividend?.approvedOn)),
-                  }),
-                  ...(eachDividend?.lastDatePrior && {
-                    lastDatePrior: new Date(
-                      parseDMY(eachDividend?.lastDatePrior),
-                    ),
-                  }),
-                  ...(eachDividend?.rate && {
-                    rate: parseFloat(replaceComma(eachDividend?.rate)),
-                  }),
-                  ...(eachDividend?.factor && {
-                    factor: parseFloat(replaceComma(eachDividend?.factor)),
-                  }),
-                  ...(eachDividend?.percentage && {
-                    percentage: parseFloat(
-                      replaceComma(eachDividend?.percentage),
-                    ),
-                  }),
-                  ...(eachDividend?.priceUnit && {
-                    priceUnit: parseFloat(
-                      replaceComma(eachDividend?.priceUnit),
-                    ),
-                  }),
-                  ...(eachDividend?.subscriptionDate && {
-                    subscriptionDate: new Date(
-                      parseDMY(eachDividend?.subscriptionDate),
-                    ),
-                  }),
-                };
-              };
-
-              const parsedData = {
-                cashDividends: cashDividends?.map(dividendParser),
-                stockDividends: stockDividends?.map(dividendParser),
-                subscriptions: subscriptions?.map(dividendParser),
-              };
-
-              dividendsData = parsedData;
-            } catch (error) {
-              dividendsData = {
-                error: true,
-              };
-            }
+            dividendsData = await getDividendsInformation({ slug });
           }
 
           const getHistory = async () => {
