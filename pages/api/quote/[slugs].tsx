@@ -140,7 +140,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
               dividendsData = parsedData;
             } catch (error) {
-              dividendsData = {};
+              dividendsData = {
+                error: true,
+              };
             }
           }
 
