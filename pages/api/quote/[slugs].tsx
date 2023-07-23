@@ -1,10 +1,9 @@
-import axios from 'axios';
 import { logHost } from '../../../utils/logHost';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { QuoteProps } from '../../../@types/QuoteProps';
 import { getFundamentalInformation } from '~/services/getFundamentalInformation';
 import { getDividendsInformation } from '~/services/getDividendsInformation';
 import { getHistoricalData } from '~/services/getHistoricalData';
+import { getQuoteInformation } from '~/services/getQuoteInformation';
 
 interface LooseObject {
   [key: string]: any;
@@ -39,9 +38,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
           const parsedSlug = isBrazilianStock ? `${slug}.SA` : slug;
 
-          const response = await axios.get(
-            `https://query1.finance.yahoo.com/v7/finance/options/${parsedSlug}`,
-          );
+          const data = await getQuoteInformation({ slug: parsedSlug });
 
           const fundamentalInformation = fundamental
             ? await getFundamentalInformation({ slug })
@@ -50,9 +47,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           const dividendsData = dividends
             ? await getDividendsInformation({ slug })
             : null;
-
-          const data: QuoteProps = await response.data.optionChain.result[0]
-            .quote;
 
           if (interval && range) {
             const historicalData = await getHistoricalData({
@@ -108,7 +102,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
               historicalQuote.dividendsData = dividendsData;
             }
 
-            if (response.status === 200) {
+            if (Object.keys(data).length > 0) {
               return historicalQuote;
             }
           }
@@ -156,7 +150,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             quote.dividendsData = dividendsData;
           }
 
-          if (response.status === 200) {
+          if (Object.keys(data).length > 0) {
             return quote;
           }
         } catch (err) {

@@ -1,6 +1,6 @@
 export interface QuoteProps {
   currency: string;
-  fiftyDayAverage?: number;
+  fiftyDayAverage: number;
   fiftyDayAverageChange?: number;
   fiftyDayAverageChangePercent?: number;
   twoHundredDayAverage: number;
