@@ -37,6 +37,9 @@ export default function FAQPage() {
     <main>
       <section className="max-w-screen min-h-screen">
         <div className="container mx-auto flex flex-col px-5 py-0 md:py-8 prose prose-lg">
+          <h1 className="text-4xl font-bold mb-8">
+            Perguntas Frequentes - FAQ
+          </h1>
           {allFAQs.map((faq, index) => {
             if (!faq) {
               return null;
