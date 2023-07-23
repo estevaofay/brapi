@@ -86,6 +86,14 @@ const Header = () => {
             </Link>
 
             <Link
+              href="/pricing"
+              className="mr-5 hover:text-white"
+              tabIndex={0}
+            >
+              Preços
+            </Link>
+
+            <Link
               prefetch={false}
               href="/faq"
               className="mr-5 hover:text-white"

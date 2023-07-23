@@ -7,6 +7,7 @@ import { Hero } from './Hero';
 import { Numbers } from './Numbers';
 import { WhatWeDo } from './WhatWeDo';
 import { FAQ } from './FAQ';
+import { MainPricing } from '../MainPricing';
 
 const Main = async () => {
   return (
@@ -17,6 +18,7 @@ const Main = async () => {
       <WhatWeDo />
       <TrustedBy />
       <Features />
+      <MainPricing />
       <Testimonials />
       <Numbers />
       <FAQ />
