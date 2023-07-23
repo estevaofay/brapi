@@ -2,14 +2,8 @@ import axios from 'axios';
 import { logHost } from '../../../utils/logHost';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { QuoteProps } from '../../../@types/QuoteProps';
-import {
-  getFundamentalInformation,
-  IGetFundamentalInformationResponse,
-} from '~/services/getFundamentalInformation';
-import {
-  getDividendsInformation,
-  IGetDividendsInformationResponse,
-} from '~/services/getDividendsInformation';
+import { getFundamentalInformation } from '~/services/getFundamentalInformation';
+import { getDividendsInformation } from '~/services/getDividendsInformation';
 import { getHistoricalData } from '~/services/getHistoricalData';
 
 interface LooseObject {
@@ -49,16 +43,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             `https://query1.finance.yahoo.com/v7/finance/options/${parsedSlug}`,
           );
 
-          let fundamentalInformation: IGetFundamentalInformationResponse = null;
-          let dividendsData: IGetDividendsInformationResponse = null;
+          const fundamentalInformation = fundamental
+            ? await getFundamentalInformation({ slug })
+            : null;
 
-          if (fundamental) {
-            fundamentalInformation = await getFundamentalInformation({ slug });
-          }
-
-          if (dividends) {
-            dividendsData = await getDividendsInformation({ slug });
-          }
+          const dividendsData = dividends
+            ? await getDividendsInformation({ slug })
+            : null;
 
           const data: QuoteProps = await response.data.optionChain.result[0]
             .quote;
