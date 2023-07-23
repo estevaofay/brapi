@@ -4,6 +4,7 @@ import { getFundamentalInformation } from '~/services/getFundamentalInformation'
 import { getDividendsInformation } from '~/services/getDividendsInformation';
 import { getHistoricalData } from '~/services/getHistoricalData';
 import { getQuoteInformation } from '~/services/getQuoteInformation';
+import { parseDefaultQuoteData } from '~/utils/parseDefaultQuoteData';
 
 interface LooseObject {
   [key: string]: any;
@@ -29,6 +30,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   ];
 
   const allSlugs = slugs.toString().split(',');
+  const shouldReturnHistoricalData = interval && range;
 
   if (slugs) {
     const responseAllSlugs = async () => {
@@ -48,113 +50,33 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             ? await getDividendsInformation({ slug })
             : null;
 
-          if (interval && range) {
-            const historicalData = await getHistoricalData({
-              slug: parsedSlug,
-              interval: interval.toString(),
-              range: range.toString(),
-            });
+          const historicalData = shouldReturnHistoricalData
+            ? await getHistoricalData({
+                slug: parsedSlug,
+                interval: interval.toString(),
+                range: range.toString(),
+              })
+            : null;
 
-            const historicalQuote: LooseObject = {
-              symbol: slug.toString().toUpperCase(),
-              shortName: data.shortName,
-              longName: data.longName,
-              currency: data.currency,
-              regularMarketPrice: data.regularMarketPrice,
-              regularMarketDayHigh: data.regularMarketDayHigh,
-              regularMarketDayLow: data.regularMarketDayLow,
-              regularMarketDayRange: data.regularMarketDayRange,
-              regularMarketChange: data.regularMarketChange,
-              regularMarketChangePercent: data.regularMarketChangePercent,
-              regularMarketTime: new Date(data.regularMarketTime * 1000),
-              marketCap: data.marketCap,
-              regularMarketVolume: data.regularMarketVolume,
-              regularMarketPreviousClose: data.regularMarketPreviousClose,
-              regularMarketOpen: data.regularMarketOpen,
-              averageDailyVolume10Day: data.averageDailyVolume10Day,
-              averageDailyVolume3Month: data.averageDailyVolume3Month,
-              fiftyTwoWeekLowChange: data.fiftyTwoWeekLowChange,
-              fiftyTwoWeekLowChangePercent: data.fiftyTwoWeekLowChangePercent,
-              fiftyTwoWeekRange: data.fiftyTwoWeekRange,
-              fiftyTwoWeekHighChange: data.fiftyTwoWeekHighChange,
-              fiftyTwoWeekHighChangePercent: data.fiftyTwoWeekHighChangePercent,
-              fiftyTwoWeekLow: data.fiftyTwoWeekLow,
-              fiftyTwoWeekHigh: data.fiftyTwoWeekHigh,
-              twoHundredDayAverage: data.twoHundredDayAverage,
-              twoHundredDayAverageChange: data.twoHundredDayAverageChange,
-              twoHundredDayAverageChangePercent:
-                data.twoHundredDayAverageChangePercent,
-              validRanges: validRanges,
+          const parsedQuoteData = parseDefaultQuoteData({
+            data,
+            slug,
+          });
+
+          const quote = {
+            ...parsedQuoteData,
+            ...(shouldReturnHistoricalData && {
               historicalDataPrice: historicalData,
-            };
-
-            if (fundamental) {
-              historicalQuote.priceEarnings =
-                fundamentalInformation?.earningsPerShare;
-              historicalQuote.earningsPerShare =
-                fundamentalInformation?.earningsPerShare;
-              historicalQuote.logourl = fundamentalInformation?.logourl
-                ? `https://s3-symbol-logo.tradingview.com/${fundamentalInformation?.logourl}--big.svg`
-                : 'https://brapi.dev/favicon.svg';
-            }
-
-            if (dividends) {
-              historicalQuote.dividendsData = dividendsData;
-            }
-
-            if (Object.keys(data).length > 0) {
-              return historicalQuote;
-            }
-          }
-
-          const quote: LooseObject = {
-            symbol: slug.toString().toUpperCase(),
-            shortName: data.shortName,
-            longName: data.longName,
-            currency: data.currency,
-            regularMarketPrice: data.regularMarketPrice,
-            regularMarketDayHigh: data.regularMarketDayHigh,
-            regularMarketDayLow: data.regularMarketDayLow,
-            regularMarketDayRange: data.regularMarketDayRange,
-            regularMarketChange: data.regularMarketChange,
-            regularMarketChangePercent: data.regularMarketChangePercent,
-            regularMarketTime: new Date(data.regularMarketTime * 1000),
-            marketCap: data.marketCap,
-            regularMarketVolume: data.regularMarketVolume,
-            regularMarketPreviousClose: data.regularMarketPreviousClose,
-            regularMarketOpen: data.regularMarketOpen,
-            averageDailyVolume10Day: data.averageDailyVolume10Day,
-            averageDailyVolume3Month: data.averageDailyVolume3Month,
-            fiftyTwoWeekLowChange: data.fiftyTwoWeekLowChange,
-            fiftyTwoWeekLowChangePercent: data.fiftyTwoWeekLowChangePercent,
-            fiftyTwoWeekRange: data.fiftyTwoWeekRange,
-            fiftyTwoWeekHighChange: data.fiftyTwoWeekHighChange,
-            fiftyTwoWeekHighChangePercent: data.fiftyTwoWeekHighChangePercent,
-            fiftyTwoWeekLow: data.fiftyTwoWeekLow,
-            fiftyTwoWeekHigh: data.fiftyTwoWeekHigh,
-            twoHundredDayAverage: data.twoHundredDayAverage,
-            twoHundredDayAverageChange: data.twoHundredDayAverageChange,
-            twoHundredDayAverageChangePercent:
-              data.twoHundredDayAverageChangePercent,
+              validRanges,
+            }),
+            ...(fundamental && { ...fundamentalInformation }),
+            ...(dividends && { dividendsData }),
           };
 
-          if (fundamental) {
-            quote.priceEarnings = fundamentalInformation?.earningsPerShare;
-            quote.earningsPerShare = fundamentalInformation?.earningsPerShare;
-            quote.logourl = fundamentalInformation?.logourl
-              ? `https://s3-symbol-logo.tradingview.com/${fundamentalInformation?.logourl}--big.svg`
-              : 'https://brapi.dev/favicon.svg';
-          }
-
-          if (dividends) {
-            quote.dividendsData = dividendsData;
-          }
-
-          if (Object.keys(data).length > 0) {
+          if (Object.keys(quote).length > 0) {
             return quote;
           }
         } catch (err) {
-          console.log({ err });
           return {
             symbol: slug.toString().toUpperCase(),
             error: true,
@@ -166,7 +88,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const dynamicDate = new Date();
       await Promise.all(promises)
         .then((actualData) => {
+          // @ts-expect-error Catch error from API
           if (actualData?.length === 1 && actualData?.[0]?.error) {
+            // @ts-expect-error Catch error from API
             throw new Error(actualData[0].message);
           }
 

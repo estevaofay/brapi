@@ -12,7 +12,7 @@ export interface QuoteProps {
   logourl?: string;
   regularMarketChange: number;
   regularMarketChangePercent: number;
-  regularMarketTime: number;
+  regularMarketTime: Date;
   regularMarketPrice: number;
   regularMarketDayHigh: number;
   regularMarketDayRange: string;

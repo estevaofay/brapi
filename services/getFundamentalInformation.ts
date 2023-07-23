@@ -34,7 +34,11 @@ export const getFundamentalInformation = async ({
       },
     );
 
-    const [priceEarnings, earningsPerShare, logourl] = data.data[0].d;
+    const [priceEarnings, earningsPerShare, logoSlug] = data.data[0].d;
+
+    const logourl = logoSlug
+      ? `https://s3-symbol-logo.tradingview.com/${logoSlug}--big.svg`
+      : 'https://brapi.dev/favicon.svg';
 
     return {
       priceEarnings,
