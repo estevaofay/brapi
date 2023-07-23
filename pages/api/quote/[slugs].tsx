@@ -6,10 +6,6 @@ import { getHistoricalData } from '~/services/getHistoricalData';
 import { getQuoteInformation } from '~/services/getQuoteInformation';
 import { parseDefaultQuoteData } from '~/utils/parseDefaultQuoteData';
 
-interface LooseObject {
-  [key: string]: any;
-}
-
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   logHost(req, 'quote');
 
@@ -85,31 +81,28 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         }
       });
 
-      const dynamicDate = new Date();
-      await Promise.all(promises)
-        .then((actualData) => {
+      try {
+        const dynamicDate = new Date();
+        const results = await Promise.all(promises);
+
+        // @ts-expect-error Catch error from API
+        if (results?.length === 1 && results?.[0]?.error) {
           // @ts-expect-error Catch error from API
-          if (actualData?.length === 1 && actualData?.[0]?.error) {
-            // @ts-expect-error Catch error from API
-            throw new Error(actualData[0].message);
-          }
+          throw new Error(results[0].message);
+        }
 
-          res.setHeader(
-            'Cache-Control',
-            's-maxage=900, stale-while-revalidate',
-          );
+        res.setHeader('Cache-Control', 's-maxage=900, stale-while-revalidate');
 
-          res.status(200).json({
-            results: actualData,
-            requestedAt: dynamicDate,
-          });
-        })
-        .catch((err) => {
-          res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate');
-          return res.status(404).json({
-            error: err.message,
-          });
+        res.status(200).json({
+          results,
+          requestedAt: dynamicDate,
         });
+      } catch (err) {
+        res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate');
+        return res.status(404).json({
+          error: err.message,
+        });
+      }
     };
 
     await responseAllSlugs();
