@@ -47,7 +47,7 @@ export const Numbers = () => {
                 <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
               </svg>
               <h2 className="title-font font-medium text-3xl text-white">
-                +5 mil
+                +50 mil
               </h2>
               <p className="leading-relaxed">Usuários por mês</p>
             </div>
