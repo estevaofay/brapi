@@ -25,6 +25,38 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     'max',
   ];
 
+  const validIntervals = [
+    '1m',
+    '2m',
+    '5m',
+    '15m',
+    '30m',
+    '60m',
+    '90m',
+    '1h',
+    '1d',
+    '5d',
+    '1wk',
+    '1mo',
+    '3mo',
+  ];
+
+  if (interval && !validIntervals.includes(interval.toString())) {
+    return res.status(400).json({
+      error: true,
+      message: `Intervalo inválido. Intervalos válidos: ${validIntervals.join(
+        ', ',
+      )}`,
+    });
+  }
+
+  if (range && !validRanges.includes(range.toString())) {
+    return res.status(400).json({
+      error: true,
+      message: `Range inválido. Ranges válidos: ${validRanges.join(', ')}`,
+    });
+  }
+
   const allSlugs = slugs.toString().split(',');
   const shouldReturnHistoricalData = interval && range;
 
@@ -64,6 +96,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             ...(shouldReturnHistoricalData && {
               historicalDataPrice: historicalData,
               validRanges,
+              validIntervals,
             }),
             ...(fundamental && { ...fundamentalInformation }),
             ...(dividends && { dividendsData }),
