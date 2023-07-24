@@ -50,16 +50,16 @@ export const Pricing = ({
       ) : null}
 
       <ul className="flex flex-col list-none h-full">
-        {features.map((feature) => (
-          <li>
+        {features.map((feature, index) => (
+          <li key={index}>
             <p className="flex items-center text-gray-400 mb-2">
               <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-800 text-gray-500 rounded-full flex-shrink-0">
                 <svg
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2.5"
                   className="w-3 h-3"
                   viewBox="0 0 24 24"
                 >
@@ -85,9 +85,9 @@ export const Pricing = ({
         <svg
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
           className="w-4 h-4 ml-auto"
           viewBox="0 0 24 24"
         >
