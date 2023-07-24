@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface ITestimonialCard {
   name: string;
   img?: string;
@@ -100,7 +102,9 @@ const TestimonialCard = ({
 
       <div className="mt-4 flex items-center gap-4 filter grayscale hover:grayscale-0 transition duration-300 ease-in-out">
         {img && (
-          <img
+          <Image
+            width={48}
+            height={48}
             alt={`Foto de ${name}`}
             src={img || '/testimonials/default.jpg'}
             className="h-12 w-12 rounded-full object-cover"

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 const MainAbout = () => {
@@ -10,9 +11,12 @@ const MainAbout = () => {
               <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
                 <div className="avatar">
                   <div className="w-24 mask mask-hexagon">
-                    <img
+                    <Image
+                      width={96}
+                      height={96}
                       src="https://github.com/alissonsleal.png"
                       alt="avatar"
+                      priority
                     />
                   </div>
                 </div>
