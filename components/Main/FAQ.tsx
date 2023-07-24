@@ -40,9 +40,9 @@ export const FAQ = () => {
     <section className="text-gray-400 bg-gray-900 body-font">
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-2/3 flex flex-col sm:flex-row mx-auto gap-4">
-          <h1 className="flex-grow sm:pr-16 text-2xl font-medium title-font text-white">
+          <h2 className="flex-grow sm:pr-16 text-2xl font-medium title-font text-white">
             Perguntas frequentes sobre a brapi
-          </h1>
+          </h2>
 
           <div className="flex flex-col gap-2 max-w-md">
             <div className="flex flex-col gap-2">

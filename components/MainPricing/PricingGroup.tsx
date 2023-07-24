@@ -44,12 +44,16 @@ const plans = [
   },
 ];
 
-export const PricingGroup = () => {
+interface IPricingGroup {
+  isStandalone?: boolean;
+}
+
+export const PricingGroup = ({ isStandalone }: IPricingGroup) => {
   return (
     <div className="flex flex-wrap mx-auto xl:justify-center">
       {plans.map((plan, index) => (
         <div key={index} className="p-4 xl:w-1/4 md:w-1/2 w-full">
-          <Pricing {...plan} />
+          <Pricing isStandalone={isStandalone} {...plan} />
         </div>
       ))}
     </div>

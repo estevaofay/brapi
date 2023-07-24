@@ -13,6 +13,7 @@ const TermsOfUsePage = () => {
   return (
     <div>
       <MainLegal>
+        <h1 className="text-title font-bold mb-1 mt-8">Termos de Uso</h1>
         <h2>1. Termos</h2>
         <p>
           Ao acessar ao site <a href="https://brapi.dev">Brapi</a>, concorda em

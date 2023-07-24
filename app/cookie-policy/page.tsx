@@ -13,8 +13,10 @@ const CookiePolicyPage = () => {
   return (
     <div>
       <MainLegal>
-        <h2>Política de Cookies Brapi</h2>
-        <h3>O que são cookies?</h3>
+        <h1 className="text-title font-bold mb-1 mt-8">
+          Política de Cookies Brapi
+        </h1>
+        <h2>O que são cookies?</h2>
         <p>
           Como é prática comum em quase todos os sites profissionais, este site
           usa cookies, que são pequenos arquivos baixados no seu computador,
@@ -24,7 +26,7 @@ const CookiePolicyPage = () => {
           esses cookies sejam armazenados, no entanto, isso pode fazer o
           downgrade ou 'quebrar' certos elementos da funcionalidade do site.
         </p>
-        <h3>Como usamos os cookies?</h3>
+        <h2>Como usamos os cookies?</h2>
         <p>
           Utilizamos cookies por vários motivos, detalhados abaixo.
           Infelizmente, na maioria dos casos, não existem opções padrão do setor
@@ -33,7 +35,7 @@ const CookiePolicyPage = () => {
           deixe todos os cookies se não tiver certeza se precisa ou não deles,
           caso sejam usados para fornecer um serviço que você usa.
         </p>
-        <h3>Desativar cookies</h3>
+        <h2>Desativar cookies</h2>
         <p>
           Você pode impedir a configuração de cookies ajustando as configurações
           do seu navegador (consulte a Ajuda do navegador para saber como fazer
@@ -43,7 +45,7 @@ const CookiePolicyPage = () => {
           determinadas funcionalidades e recursos deste site. Portanto, é
           recomendável que você não desative os cookies.
         </p>
-        <h3>Cookies que definimos</h3>
+        <h2>Cookies que definimos</h2>
         <ul>
           <li>
             {' '}
@@ -114,7 +116,7 @@ const CookiePolicyPage = () => {
             <br />{' '}
           </li>
         </ul>
-        <h3>Cookies de Terceiros</h3>
+        <h2>Cookies de Terceiros</h2>
         <p>
           Em alguns casos especiais, também usamos cookies fornecidos por
           terceiros confiáveis. A seção a seguir detalha quais cookies de
@@ -164,7 +166,7 @@ const CookiePolicyPage = () => {
             possível.
           </li>
         </ul>
-        <h3>Compromisso do Usuário</h3>
+        <h2>Compromisso do Usuário</h2>
         <p>
           O usuário se compromete a fazer uso adequado dos conteúdos e da
           informação que o Brapi oferece no site e com caráter enunciativo, mas
@@ -198,7 +200,7 @@ const CookiePolicyPage = () => {
             anteriormente mencionados.
           </li>
         </ul>
-        <h3>Mais informações</h3>
+        <h2>Mais informações</h2>
         <p>
           Esperemos que esteja esclarecido e, como mencionado anteriormente, se
           houver algo que você não tem certeza se precisa ou não, geralmente é

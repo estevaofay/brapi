@@ -1,3 +1,5 @@
+import { HTMLAttributes } from 'react';
+
 interface IPricing {
   title: string;
   price: string;
@@ -5,7 +7,20 @@ interface IPricing {
   buttonUrl: string;
   isPopular?: boolean;
   observation: string;
+  isStandalone?: boolean;
 }
+
+interface IPricingTitle extends HTMLAttributes<HTMLHeadingElement> {
+  isStandalone?: boolean;
+}
+
+const PricingTitle = ({ isStandalone, children, ...props }: IPricingTitle) => {
+  return isStandalone ? (
+    <h2 {...props}>{children}</h2>
+  ) : (
+    <h3 {...props}>{children}</h3>
+  );
+};
 
 export const Pricing = ({
   title,
@@ -14,15 +29,19 @@ export const Pricing = ({
   buttonUrl,
   isPopular,
   observation,
+  isStandalone,
 }: IPricing) => {
   return (
     <div className="h-full p-6 rounded-lg border-2 border-gray-700 flex flex-col relative overflow-hidden">
-      <h2 className="text-sm tracking-widest text-gray-400 title-font mb-1 font-medium uppercase">
+      <PricingTitle
+        isStandalone={isStandalone}
+        className="text-sm tracking-widest text-gray-400 title-font mb-1 font-medium uppercase"
+      >
         {title}
-      </h2>
-      <h3 className="text-5xl text-white pb-4 mb-4 border-b border-gray-800 leading-none">
+      </PricingTitle>
+      <span className="text-5xl text-white pb-4 mb-4 border-b border-gray-800 leading-none">
         {price}
-      </h3>
+      </span>
 
       {isPopular ? (
         <span className="bg-indigo-500 text-white px-3 py-1 tracking-widest text-xs absolute right-0 top-0 rounded-bl">

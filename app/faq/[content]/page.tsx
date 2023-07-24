@@ -52,15 +52,15 @@ export default function FAQContentPage({
             >
               Voltar
             </NextLink>
-            <h2 className="text-2xl font-bold mb-1">
+            <h1 className="text-2xl font-bold mb-1 mt-8">
               {fileContents?.data?.title}
-            </h2>
+            </h1>
 
             {/* @ts-expect-error Server Component */}
             <MDXRemote
               source={fileContents.content}
               components={{
-                p: (props) => <p {...props} className="mb-0" />,
+                p: (props) => <p {...props} className="mb-0 mt-1" />,
               }}
             />
           </div>
