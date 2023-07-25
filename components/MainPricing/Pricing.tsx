@@ -5,6 +5,7 @@ interface IPricing {
   price: string;
   features: string[];
   buttonUrl: string;
+  buttonLabel?: string;
   isPopular?: boolean;
   observation: string;
   isStandalone?: boolean;
@@ -27,6 +28,7 @@ export const Pricing = ({
   price,
   features,
   buttonUrl,
+  buttonLabel,
   isPopular,
   observation,
   isStandalone,
@@ -75,13 +77,11 @@ export const Pricing = ({
       <a
         className="btn btn-primary"
         href={buttonUrl}
-        target="_blank"
-        rel="noopener noreferrer"
         role="button"
         // @ts-expect-error
         disabled={!buttonUrl}
       >
-        {buttonUrl ? 'Começar' : 'Em breve'}
+        {buttonUrl ? buttonLabel || 'Começar' : buttonLabel || 'Em breve'}
         <svg
           fill="none"
           stroke="currentColor"

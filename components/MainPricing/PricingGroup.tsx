@@ -11,11 +11,12 @@ const plans = [
       'Dados atualizados a cada 30 minutos*',
     ],
     buttonUrl: '/docs',
+    buttonLabel: 'Começar',
     observation: '*Ilimitado enquanto outros planos não estiverem disponíveis',
   },
   {
     title: 'Startup',
-    price: 'Em breve',
+    price: 'Beta em breve',
     features: [
       'Suporte premium',
       '100 requisições por minuto',
@@ -24,8 +25,10 @@ const plans = [
       'Dados históricos',
       'Dados de dividendos',
     ],
-    buttonUrl: '',
-    observation: 'Ideal para apps e sites com tráfego moderado',
+    buttonUrl:
+      'https://tally.so#tally-open=mDkq8Z&tally-emoji-text=👋&tally-emoji-animation=wave&layout=modal&width=600',
+    buttonLabel: 'Entrar na lista de espera',
+    observation: 'Seja um beta tester e no lançamento ganhe 1 mês grátis',
   },
   {
     title: 'Enterprise',
