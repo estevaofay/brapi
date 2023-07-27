@@ -1,96 +1,108 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
-const MainAbout = () => {
+export const MainAbout = () => {
   return (
     <main>
-      <section className="text-gray-400 bg-gray-900 body-font">
-        <div className="container px-5 py-0 md:py-24 mx-auto flex flex-col">
-          <div className="lg:w-4/6 mx-auto">
-            <div className="flex flex-col sm:flex-row mt-10">
-              <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
-                <div className="avatar">
-                  <div className="w-24 mask mask-hexagon">
-                    <Image
-                      width={96}
-                      height={96}
-                      src="https://github.com/alissonsleal.png"
-                      alt="avatar"
-                      priority
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col items-center text-center justify-center">
-                  <h2 className="font-medium title-font mt-4 text-white text-lg">
-                    Alisson Leal
-                  </h2>
-                  <div className="w-12 h-1 bg-brand-500 rounded mt-2 mb-4"></div>
-                  <p className="text-base text-gray-400">
-                    Founder e Software Engineer na brapi
-                  </p>
-                </div>
-              </div>
-              <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-800 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
-                <p className="leading-relaxed text-lg mb-4">
-                  Eu desenvolvi a brapi porque um dia eu precisei usar alguns
-                  dados do mercado de ações da Bovespa e foi nesse momento que
-                  <b>
-                    {' '}
-                    eu descobri que simplesmente não existe uma API fácil e
-                    gratuita para buscar esses dados,{' '}
-                  </b>
-                  na verdade eu até encontrei uma outra API pra isso mas era bem
-                  burocrática, precisava criar uma conta com os meus dados
-                  pessoais, o meu cartão de crédito e ainda precisaria
-                  configurar uma chave de autenticação pra começar a fazer
-                  qualquer requisição, depois de tudo isso eu ainda teria um
-                  limite de requisições super baixo.
-                </p>
-                <p className="leading-relaxed text-lg mb-4">
-                  Na brapi, nós acreditamos que os desenvolvedores devem ter as
-                  ferramentas corretas e fácil acesso para que tecnologias
-                  disruptivas possam ser criadas. Estamos felizes em poder
-                  simplificar gratuitamente o processo de criação de novas
-                  tecnologias.
-                </p>
-                <p className="leading-relaxed text-lg mb-4">
-                  Conseguimos deixar a API gratuita e acessível para todas as
-                  pessoas através da nossa principal patrocinadora, a
-                  <a
-                    href="https://vercel.com/?utm_source=alisson-oss&utm_campaign=oss"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {' '}
-                    Vercel,{' '}
-                  </a>
-                  onde é disponibiilizada toda a sua infraestrutura global.
-                </p>
-                <Link
-                  prefetch={false}
-                  href="/docs"
-                  className="text-brand-400 inline-flex items-center"
-                >
-                  Começar
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="w-4 h-4 ml-2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7"></path>
-                  </svg>
-                </Link>
-              </div>
-            </div>
-          </div>
+      <section className="text-white bg-gray-900 body-font max-w-screen">
+        <div className="container mx-auto flex flex-col px-5 py-0 md:py-24 text-left prose prose-invert prose-headings:text-white prose-a:text-white prose-strong:text-white prose-li:marker:text-white text-white">
+          <h1>Bem-vindo(a) à brapi!</h1>
+          <p>
+            Na brapi, estamos comprometidos em simplificar o acesso a dados
+            financeiros e promover a democratização das informações no mercado
+            de ações e moedas. Somos uma plataforma open source que oferece uma
+            poderosa API para desenvolvedores, empresas e entusiastas do mercado
+            financeiro.
+          </p>
+          <h2>Nossa Missão</h2>
+          <p>
+            Nossa missão é fornecer uma solução abrangente e acessível para o
+            acesso a dados financeiros, permitindo que nossos usuários
+            desenvolvam soluções inovadoras e tomem decisões informadas.
+          </p>
+          <h2>Recursos Principais</h2>
+          <p>
+            Aqui estão alguns dos recursos principais oferecidos pela brapi:
+          </p>
+          <ol>
+            <li>
+              <p>
+                <strong>Dados Financeiros Atualizados</strong>: Oferecemos dados
+                atualizados de ações, incluindo valores de abertura, fechamento,
+                máximo e mínimo do dia, além de informações detalhadas sobre
+                empresas listadas no mercado de ações IBOVESPA.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Conversão de Moedas Abrangente</strong>: Nossa API
+                permite a conversão de mais de 50 moedas diferentes, facilitando
+                transações internacionais e o acompanhamento de taxas de câmbio.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Histórico da Inflação Brasileira</strong>:
+                Disponibilizamos dados históricos da inflação do real brasileiro
+                (R$) desde 1994, oferecendo uma ferramenta valiosa para análises
+                econômicas e financeiras.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Atualizações em Tempo Real</strong>: As informações das
+                ações são atualizadas a cada 15 minutos, garantindo que nossos
+                usuários tenham acesso aos dados mais recentes do mercado.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Gratuito e Ilimitado</strong>: Atualmente, nossa API é
+                gratuita e não possui limitações de uso.
+              </p>
+            </li>
+          </ol>
+          <h2>Nosso Compromisso</h2>
+          <p>
+            Na brapi, valorizamos a qualidade dos dados e a confiabilidade da
+            nossa API. Nossos desenvolvedores trabalham continuamente para
+            garantir a precisão e a atualização constante das informações.
+          </p>
+          <h2>Para Desenvolvedores e Empresas</h2>
+          <p>
+            Nossa API é especialmente projetada para atender às necessidades de
+            desenvolvedores e empresas que buscam uma solução simplificada para
+            acessar dados financeiros confiáveis. Com uma integração versátil,
+            você pode criar aplicativos, sites e ferramentas de análise com
+            facilidade.
+          </p>
+          <h2>Junte-se a Nós!</h2>
+          <p>
+            Estamos empolgados em compartilhar a experiência da brapi com você!
+            Junte-se à nossa comunidade e descubra como nossa API pode
+            impulsionar suas análises financeiras e melhorar suas tomadas de
+            decisão.
+          </p>
+          <p>
+            Explore a brapi agora mesmo e experimente o poder de acessar dados
+            financeiros de forma simples e gratuita!
+          </p>
+
+          <Link prefetch={false} href="/docs" className="btn btn-neutral">
+            Ver documentação
+            <svg
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="w-4 h-4 ml-2"
+              viewBox="0 0 24 24"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </Link>
         </div>
       </section>
     </main>
   );
 };
-
-export default MainAbout;
