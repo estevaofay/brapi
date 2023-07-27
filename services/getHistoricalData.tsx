@@ -49,22 +49,22 @@ export const getHistoricalData = async ({
     }`,
   );
 
-  const result = historicalResponse.data.chart.result[0];
+  const result = historicalResponse.data.chart.result?.[0];
 
-  const { timestamp, indicators } = result;
-  const { quote, adjclose } = indicators;
+  const { timestamp, indicators } = result || {};
+  const { quote, adjclose } = indicators || {};
   const { low, high, open, close, volume } = quote[0];
 
-  const { adjclose: adjustedClose } = adjclose[0] || {};
+  const { adjclose: adjustedClose } = adjclose?.[0] || {};
 
   const prices = timestamp.map((date, index) => ({
     date,
-    open: open[index] || null,
-    high: high[index] || null,
-    low: low[index] || null,
-    close: close[index] || null,
-    volume: volume[index] || null,
-    adjustedClose: adjustedClose[index] || null,
+    open: open?.[index] ?? null,
+    high: high?.[index] ?? null,
+    low: low?.[index] ?? null,
+    close: close?.[index] ?? null,
+    volume: volume?.[index] ?? null,
+    adjustedClose: adjustedClose?.[index] ?? null,
   }));
 
   return prices;
