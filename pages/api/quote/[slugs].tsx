@@ -106,10 +106,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             return quote;
           }
         } catch (err) {
+          const errorMessage = err?.response?.data?.chart?.error?.description;
+
           return {
             symbol: slug.toString().toUpperCase(),
             error: true,
-            message: `Não encontramos a ação ${slug.toString().toUpperCase()}`,
+            message:
+              errorMessage ||
+              `Não encontramos a ação ${slug.toString().toUpperCase()}`,
           };
         }
       });
