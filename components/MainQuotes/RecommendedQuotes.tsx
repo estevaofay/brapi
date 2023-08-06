@@ -19,7 +19,7 @@ const getRecommendedQuotes = async (quote: string) => {
 
     const recommendedQuotes = await getCurrentQuote({
       stocks: recommendedSymbols,
-      fundamental: false,
+      fundamental: true,
     });
 
     return recommendedQuotes;
