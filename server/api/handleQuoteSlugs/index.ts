@@ -57,9 +57,7 @@ export const processQuoteSlugData = async ({
     fundamentalInformation,
     dividendsData,
     historicalData,
-  ] = await Promise.all(
-    promises.map((promise) => promise.catch((e) => console.error(e))),
-  );
+  ] = await Promise.all(promises);
 
   const parsedQuoteData = parseDefaultQuoteData({
     data,

@@ -32,7 +32,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const responseAllSlugs = async () => {
       const promises = allSlugs.map(async (slug) => {
         try {
-          return processQuoteSlugData({
+          return await processQuoteSlugData({
             slug,
             dividends,
             fundamental,
