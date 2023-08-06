@@ -6,7 +6,7 @@ import { parseDefaultQuoteData } from '~/utils/parseDefaultQuoteData';
 import { validRanges } from '~/constants/validRanges';
 import { validIntervals } from '~/constants/validIntervals';
 
-const resolvedPromise = new Promise((resolve) => resolve({}));
+const resolvedPromise = Promise.resolve();
 
 interface IProcessQuoteSlugData {
   fundamental: boolean;
