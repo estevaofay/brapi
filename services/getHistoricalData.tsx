@@ -21,7 +21,7 @@ interface IYahooFinanceResponse {
 }
 
 interface IGetHistoricalData {
-  slug: string;
+  parsedSlug: string;
   interval?: string;
   range?: string;
 }
@@ -37,12 +37,12 @@ export interface IGetHistoricalDataResponse {
 }
 
 export const getHistoricalData = async ({
-  slug,
+  parsedSlug,
   interval,
   range,
 }: IGetHistoricalData): Promise<IGetHistoricalDataResponse[]> => {
   const historicalResponse = await axios.get<IYahooFinanceResponse>(
-    `https://query1.finance.yahoo.com/v8/finance/chart/${slug}${
+    `https://query1.finance.yahoo.com/v8/finance/chart/${parsedSlug}${
       interval && range
         ? `?includePrePost=false&interval=${interval}&useYfid=true&range=${range}`
         : '?includePrePost=false&interval=1d&useYfid=true&range=1mo'

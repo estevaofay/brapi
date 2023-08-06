@@ -87,15 +87,15 @@ export interface IYahooFinanceQuote {
 }
 
 interface IGetQuoteInformation {
-  slug: string;
+  parsedSlug: string;
 }
 
 export const getQuoteInformation = async ({
-  slug,
+  parsedSlug,
 }: IGetQuoteInformation): Promise<IYahooFinanceQuote> => {
   const response = await axios.get<IYahooFinanceQuoteResponse>(
-    `https://query1.finance.yahoo.com/v7/finance/options/${slug}`,
+    `https://query1.finance.yahoo.com/v7/finance/options/${parsedSlug}`,
   );
 
-  return response.data.optionChain.result[0].quote;
+  return response?.data?.optionChain?.result?.[0]?.quote;
 };

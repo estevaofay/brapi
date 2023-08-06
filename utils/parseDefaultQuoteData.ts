@@ -43,7 +43,7 @@ export const parseDefaultQuoteData = ({
   slug,
   customFields,
 }: IParseDefaultQuoteData) => {
-  const { symbol, regularMarketTime, ...rest } = data;
+  const { symbol, regularMarketTime, ...rest } = data ?? {};
 
   const allFields = [...defaultFields, ...(customFields ?? [])];
 
@@ -56,6 +56,6 @@ export const parseDefaultQuoteData = ({
   return {
     ...necessaryFields,
     symbol: slug.toString().toUpperCase(),
-    regularMarketTime: new Date(data.regularMarketTime * 1000),
+    regularMarketTime: new Date(regularMarketTime * 1000),
   };
 };
