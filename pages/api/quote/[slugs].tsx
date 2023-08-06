@@ -74,9 +74,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             ? await getFundamentalInformation({ slug })
             : null;
 
-          const dividendsData = dividends
-            ? await getDividendsInformation({ slug })
-            : null;
+          const dividendsData =
+            dividends === 'true'
+              ? await getDividendsInformation({ slug })
+              : null;
 
           const historicalData = shouldReturnHistoricalData
             ? await getHistoricalData({
@@ -99,7 +100,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
               validIntervals,
             }),
             ...(fundamental && { ...fundamentalInformation }),
-            ...(dividends && { dividendsData }),
+            ...(dividends === 'true' && { dividendsData }),
           };
 
           if (Object.keys(quote).length > 0) {
