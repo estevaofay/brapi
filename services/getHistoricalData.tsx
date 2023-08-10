@@ -57,7 +57,7 @@ export const getHistoricalData = async ({
 
   const { adjclose: adjustedClose } = adjclose?.[0] || {};
 
-  const prices = timestamp.map((date, index) => ({
+  const prices = timestamp?.map((date, index) => ({
     date,
     open: open?.[index] ?? null,
     high: high?.[index] ?? null,
@@ -67,5 +67,5 @@ export const getHistoricalData = async ({
     adjustedClose: adjustedClose?.[index] ?? null,
   }));
 
-  return prices;
+  return prices ?? [];
 };
