@@ -22,7 +22,7 @@ export const insertMultipleQuotesAndHistoricalData = async (
       .map((response) => {
         const { historicalDataPrice: historicalDataResponse } = response;
 
-        const historicalDataPrices = historicalDataResponse.map(
+        const historicalDataPrices = historicalDataResponse?.map(
           ({ date, open, high, low, close, volume }) => ({
             symbol: response.symbol,
             date,
@@ -34,21 +34,22 @@ export const insertMultipleQuotesAndHistoricalData = async (
           }),
         );
 
-        return historicalDataPrices;
+        return historicalDataPrices ?? [];
       })
       .flat();
 
-    const allTickers: ITicker[] = responses.map((response) => {
-      const {
-        dividendsData,
-        historicalDataPrice,
-        validRanges,
-        validIntervals,
-        ...quote
-      } = response;
+    const allTickers: ITicker[] =
+      responses?.map((response) => {
+        const {
+          dividendsData,
+          historicalDataPrice,
+          validRanges,
+          validIntervals,
+          ...quote
+        } = response;
 
-      return quote;
-    });
+        return quote;
+      }) || [];
 
     const excludedTickers = {
       ...Object.fromEntries(
@@ -62,18 +63,22 @@ export const insertMultipleQuotesAndHistoricalData = async (
     await serverlessClient.connect();
 
     await db.transaction(async (trx) => {
-      await trx
-        .insert(historicalData)
-        .values(allHistoricalDataPrices)
-        .onConflictDoNothing();
+      if (allHistoricalDataPrices?.length) {
+        await trx
+          .insert(historicalData)
+          .values(allHistoricalDataPrices)
+          .onConflictDoNothing();
+      }
 
-      await trx
-        .insert(tickers)
-        .values(allTickers)
-        .onConflictDoUpdate({
-          target: [tickers.symbol],
-          set: excludedTickers,
-        });
+      if (allTickers?.length) {
+        await trx
+          .insert(tickers)
+          .values(allTickers)
+          .onConflictDoUpdate({
+            target: [tickers.symbol],
+            set: excludedTickers,
+          });
+      }
     });
 
     await serverlessClient.clean();
