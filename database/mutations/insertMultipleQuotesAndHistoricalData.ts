@@ -20,17 +20,12 @@ export const insertMultipleQuotesAndHistoricalData = async (
 
     const allHistoricalDataPrices: IHistoricalDataInsert[] = responses
       .map((response) => {
-        const { historicalDataPrice: historicalDataResponse } = response;
+        const { historicalDataPrice: historicalDataResponses } = response;
 
-        const historicalDataPrices = historicalDataResponse?.map(
-          ({ date, open, high, low, close, volume }) => ({
+        const historicalDataPrices = historicalDataResponses?.map(
+          (historicalDataResponse) => ({
+            ...historicalDataResponse,
             symbol: response.symbol,
-            date,
-            open,
-            high,
-            low,
-            close,
-            volume,
           }),
         );
 
