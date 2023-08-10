@@ -90,9 +90,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         res.setHeader('Cache-Control', 's-maxage=900, stale-while-revalidate');
 
         res.status(200).json({
-          took,
           results,
           requestedAt: dynamicDate,
+          took,
         });
       } catch (err) {
         res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate');
