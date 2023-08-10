@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-migration": "drizzle-kit generate:pg --out ./database/migrations --schema ./database/schemas/schema.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^0.1.11",
@@ -17,6 +18,8 @@
     "d3-format": "^3.1.0",
     "d3-time-format": "^4.1.0",
     "daisyui": "^2.51.3",
+    "drizzle-kit": "^0.19.12",
+    "drizzle-orm": "^0.28.1",
     "encoding": "^0.1.13",
     "eslint-config-next": "^13.2.4",
     "gray-matter": "^4.0.3",

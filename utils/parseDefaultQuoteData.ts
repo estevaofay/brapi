@@ -1,4 +1,6 @@
 import { IYahooFinanceQuote } from '~/services/getQuoteInformation';
+import { db, serverlessClient } from '~/database';
+import { ITicker, tickers } from '~/database/schemas/schema';
 
 const defaultFields = [
   'currency',
@@ -38,7 +40,7 @@ interface IParseDefaultQuoteData {
   customFields?: ICustomFields[];
 }
 
-export const parseDefaultQuoteData = ({
+export const parseDefaultQuoteData = async ({
   data,
   slug,
   customFields,
@@ -53,9 +55,29 @@ export const parseDefaultQuoteData = ({
     return acc;
   }, {} as typeof rest);
 
-  return {
+  const parsedQuoteData = {
     ...necessaryFields,
     symbol: slug.toString().toUpperCase(),
     regularMarketTime: new Date(data.regularMarketTime * 1000),
+  };
+
+  const start = performance.now();
+  await serverlessClient.connect();
+  await db
+    .insert(tickers)
+    .values({
+      ...((parsedQuoteData as unknown) as ITicker),
+    })
+    .onConflictDoUpdate({
+      set: (parsedQuoteData as unknown) as ITicker,
+      target: tickers.symbol,
+    });
+
+  await serverlessClient.clean();
+  const end = performance.now();
+
+  return {
+    took: (end - start).toFixed(0) + 'ms',
+    ...parsedQuoteData,
   };
 };

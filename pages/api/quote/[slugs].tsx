@@ -86,7 +86,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
               })
             : null;
 
-          const parsedQuoteData = parseDefaultQuoteData({
+          const parsedQuoteData = await parseDefaultQuoteData({
             data,
             slug,
           });

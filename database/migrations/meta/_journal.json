@@ -1,0 +1,48 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1691628103735,
+      "tag": "0000_petite_dormammu",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1691629931377,
+      "tag": "0001_old_glorian",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1691630354413,
+      "tag": "0002_low_randall",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1691631124973,
+      "tag": "0003_flippant_nitro",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1691632374999,
+      "tag": "0004_tearful_unicorn",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1691632708167,
+      "tag": "0005_easy_sunfire",
+      "breakpoints": true
+    }
+  ]
+}

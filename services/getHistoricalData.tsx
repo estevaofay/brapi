@@ -1,4 +1,9 @@
 import axios from 'axios';
+import { db, serverlessClient } from '~/database';
+import {
+  historicalData,
+  IHistoricalDataInsert,
+} from '~/database/schemas/schema';
 
 interface IYahooFinanceResponse {
   chart: {
@@ -66,6 +71,20 @@ export const getHistoricalData = async ({
     volume: volume[index] || null,
     adjustedClose: adjustedClose[index] || null,
   }));
+
+  const dbPrices: IHistoricalDataInsert[] = prices.map((price) => ({
+    ...price,
+    symbol: slug,
+  }));
+
+  await serverlessClient.connect();
+  await db
+    .insert(historicalData)
+    .values(dbPrices)
+    .onConflictDoNothing()
+    .execute();
+
+  await serverlessClient.clean();
 
   return prices;
 };

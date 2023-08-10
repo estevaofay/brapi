@@ -1,0 +1,1 @@
+ALTER TABLE "historical_data" ADD CONSTRAINT "historical_data_symbol_date_unique" UNIQUE("symbol","date");
