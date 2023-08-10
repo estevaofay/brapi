@@ -13,7 +13,9 @@ const PrivacyPolicyPage = () => {
   return (
     <div>
       <MainLegal>
-        <h2>Política Privacidade</h2>
+        <h1 className="text-title font-bold mb-1 mt-8">
+          Política de Privacidade
+        </h1>
         <p>
           A sua privacidade é importante para nós. É política do Brapi respeitar
           a sua privacidade em relação a qualquer informação sua que possamos

@@ -3,9 +3,9 @@ export const Numbers = () => {
     <section className="text-gray-400 bg-gray-900 body-font">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-col text-center w-full mb-20">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font text-white">
+          <h2 className="sm:text-3xl text-2xl font-medium title-font text-white">
             Junte-se a nós e faça parte da nossa comunidade
-          </h1>
+          </h2>
           <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
             Começamos em 2021 e já temos números impressionantes
           </p>
@@ -25,9 +25,9 @@ export const Numbers = () => {
                 <path d="M8 17l4 4 4-4m-4-5v9"></path>
                 <path d="M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29"></path>
               </svg>
-              <h2 className="title-font font-medium text-3xl text-white">
+              <h3 className="title-font font-medium text-3xl text-white">
                 +50 milhões
-              </h2>
+              </h3>
               <p className="leading-relaxed">Requisições por mês</p>
             </div>
           </div>
@@ -46,9 +46,9 @@ export const Numbers = () => {
                 <circle cx="9" cy="7" r="4"></circle>
                 <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
               </svg>
-              <h2 className="title-font font-medium text-3xl text-white">
+              <h3 className="title-font font-medium text-3xl text-white">
                 +50 mil
-              </h2>
+              </h3>
               <p className="leading-relaxed">Usuários por mês</p>
             </div>
           </div>
@@ -71,9 +71,9 @@ export const Numbers = () => {
                 ></path>
               </svg>
 
-              <h2 className="title-font font-medium text-3xl text-white">
+              <h3 className="title-font font-medium text-3xl text-white">
                 +2.500
-              </h2>
+              </h3>
               <p className="leading-relaxed">Ações/moedas monitoradas</p>
             </div>
           </div>
@@ -90,9 +90,9 @@ export const Numbers = () => {
               >
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
               </svg>
-              <h2 className="title-font font-medium text-3xl text-white">
+              <h3 className="title-font font-medium text-3xl text-white">
                 +99,9%
-              </h2>
+              </h3>
               <p className="leading-relaxed">Uptime</p>
             </div>
           </div>

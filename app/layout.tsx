@@ -72,6 +72,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {clarityCode}
       </Script>
 
+      <Script
+        id="tally"
+        async
+        defer
+        src="https://tally.so/widgets/embed.js"
+        strategy="beforeInteractive"
+      />
+
       <body className="bg-gray-900">
         <Header />
         {children}

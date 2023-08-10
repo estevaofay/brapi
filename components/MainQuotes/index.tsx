@@ -12,6 +12,7 @@ const MainQuotes = async ({ currentStock }: IMainQuotesProps) => {
     stocks: currentStock,
     interval: '1mo',
     range: 'max',
+    fundamental: true,
   });
 
   if (!currentQuote) {

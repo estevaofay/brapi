@@ -1,45 +1,13 @@
 import { logHost } from '../../../utils/logHost';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getFundamentalInformation } from '~/services/getFundamentalInformation';
-import { getDividendsInformation } from '~/services/getDividendsInformation';
-import { getHistoricalData } from '~/services/getHistoricalData';
-import { getQuoteInformation } from '~/services/getQuoteInformation';
-import { parseDefaultQuoteData } from '~/utils/parseDefaultQuoteData';
+import { processQuoteSlugData } from '~/server/api/handleQuoteSlugs';
+import { validRanges } from '~/constants/validRanges';
+import { validIntervals } from '~/constants/validIntervals';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   logHost(req, 'quote');
 
   const { slugs, interval, range, fundamental, dividends } = req.query;
-
-  const validRanges = [
-    '1d',
-    '5d',
-    '1mo',
-    '3mo',
-    '6mo',
-    '1y',
-    '2y',
-    '5y',
-    '10y',
-    'ytd',
-    'max',
-  ];
-
-  const validIntervals = [
-    '1m',
-    '2m',
-    '5m',
-    '15m',
-    '30m',
-    '60m',
-    '90m',
-    '1h',
-    '1d',
-    '5d',
-    '1wk',
-    '1mo',
-    '3mo',
-  ];
 
   if (interval && !validIntervals.includes(interval.toString())) {
     return res.status(400).json({
@@ -64,52 +32,25 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const responseAllSlugs = async () => {
       const promises = allSlugs.map(async (slug) => {
         try {
-          const isBrazilianStock = /\d/.test(slug);
-
-          const parsedSlug = isBrazilianStock ? `${slug}.SA` : slug;
-
-          const data = await getQuoteInformation({ slug: parsedSlug });
-
-          const fundamentalInformation = fundamental
-            ? await getFundamentalInformation({ slug })
-            : null;
-
-          const dividendsData = dividends
-            ? await getDividendsInformation({ slug })
-            : null;
-
-          const historicalData = shouldReturnHistoricalData
-            ? await getHistoricalData({
-                slug: parsedSlug,
-                interval: interval.toString(),
-                range: range.toString(),
-              })
-            : null;
-
-          const parsedQuoteData = await parseDefaultQuoteData({
-            data,
+          return await processQuoteSlugData({
             slug,
+            dividends,
+            fundamental,
+            interval,
+            range,
+            shouldReturnHistoricalData,
           });
-
-          const quote = {
-            ...parsedQuoteData,
-            ...(shouldReturnHistoricalData && {
-              historicalDataPrice: historicalData,
-              validRanges,
-              validIntervals,
-            }),
-            ...(fundamental && { ...fundamentalInformation }),
-            ...(dividends && { dividendsData }),
-          };
-
-          if (Object.keys(quote).length > 0) {
-            return quote;
-          }
         } catch (err) {
+          console.log({ err });
+
+          const errorMessage = err?.response?.data?.chart?.error?.description;
+
           return {
             symbol: slug.toString().toUpperCase(),
             error: true,
-            message: `Não encontramos a ação ${slug.toString().toUpperCase()}`,
+            message:
+              errorMessage ||
+              `Não encontramos a ação ${slug.toString().toUpperCase()}`,
           };
         }
       });

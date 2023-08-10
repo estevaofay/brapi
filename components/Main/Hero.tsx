@@ -27,17 +27,19 @@ export const Hero = () => {
               className="object-cover object-center"
               alt="Dashboard de gráficos com uma pessoa feliz"
               src={dashboardPersonImage}
+              priority
             />
             <Image
               className="object-cover object-center absolute top-1/2 -left-16 motion-safe:animate-bounce"
               alt="Cartão de crédito"
               src={creditCardImage}
+              priority
             />
             <Image
               className="object-cover object-center absolute bottom-0 right-0 motion-safe:animate-wiggle origin-bottom"
               alt="Planta"
-              // src="/hero_image/plant.png"
               src={plantImage}
+              priority
             />
           </div>
         </div>

@@ -5,9 +5,9 @@ export const WhatWeDo = () => {
     <section className="text-gray-400 body-font bg-gray-900">
       <div className="container flex flex-wrap px-5 py-24 mx-auto items-center">
         <div className="md:w-1/2 md:pr-12 md:py-8 md:border-r md:border-b-0 md:mb-0 mb-10 pb-10 border-b border-gray-800">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">
+          <h2 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">
             O que realmente fazemos
-          </h1>
+          </h2>
           <p className="leading-relaxed text-base">
             A brapi é uma API de ações, moedas e criptomoedas onde você tem
             acesso aos dados de qualquer ação, como preço atual, preço mínimo e
@@ -36,9 +36,9 @@ export const WhatWeDo = () => {
           </Link>
         </div>
         <div className="flex flex-col md:w-1/2 md:pl-12">
-          <h2 className="title-font font-semibold text-white tracking-wider text-sm mb-3">
+          <h3 className="title-font font-semibold text-white tracking-wider text-sm mb-3">
             CATEGORIAS
-          </h2>
+          </h3>
           <ul className="flex flex-wrap list-none -mb-1">
             <li className="lg:w-1/3 mb-1 w-1/2">
               <Link

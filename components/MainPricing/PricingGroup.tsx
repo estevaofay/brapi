@@ -11,11 +11,12 @@ const plans = [
       'Dados atualizados a cada 30 minutos*',
     ],
     buttonUrl: '/docs',
+    buttonLabel: 'Começar',
     observation: '*Ilimitado enquanto outros planos não estiverem disponíveis',
   },
   {
     title: 'Startup',
-    price: 'Em breve',
+    price: 'Beta em breve',
     features: [
       'Suporte premium',
       '100 requisições por minuto',
@@ -24,8 +25,10 @@ const plans = [
       'Dados históricos',
       'Dados de dividendos',
     ],
-    buttonUrl: '',
-    observation: 'Ideal para apps e sites com tráfego moderado',
+    buttonUrl:
+      'https://tally.so#tally-open=mDkq8Z&tally-emoji-text=👋&tally-emoji-animation=wave&layout=modal&width=600',
+    buttonLabel: 'Entrar na lista de espera',
+    observation: 'Seja um beta tester e no lançamento ganhe 1 mês grátis',
   },
   {
     title: 'Enterprise',
@@ -44,12 +47,16 @@ const plans = [
   },
 ];
 
-export const PricingGroup = () => {
+interface IPricingGroup {
+  isStandalone?: boolean;
+}
+
+export const PricingGroup = ({ isStandalone }: IPricingGroup) => {
   return (
     <div className="flex flex-wrap mx-auto xl:justify-center">
       {plans.map((plan, index) => (
         <div key={index} className="p-4 xl:w-1/4 md:w-1/2 w-full">
-          <Pricing {...plan} />
+          <Pricing isStandalone={isStandalone} {...plan} />
         </div>
       ))}
     </div>
