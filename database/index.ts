@@ -14,5 +14,5 @@ export const serverlessClient = new ServerlessClient({
 
 export const db = drizzle(serverlessClient, {
   schema: schema,
-  logger: true,
+  logger: process.env.NODE_ENV === 'development',
 });
