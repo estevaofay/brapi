@@ -4,10 +4,24 @@ import { processQuoteSlugData } from '~/server/api/handleQuoteSlugs';
 import { validRanges } from '~/constants/validRanges';
 import { validIntervals } from '~/constants/validIntervals';
 
+interface IQuery {
+  slugs?: string;
+  interval?: string;
+  range?: string;
+  fundamental?: string;
+  dividends?: string;
+}
+
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   logHost(req, 'quote');
 
-  const { slugs, interval, range, fundamental, dividends } = req.query;
+  const {
+    slugs,
+    interval,
+    range,
+    fundamental,
+    dividends,
+  } = req.query as IQuery;
 
   if (interval && !validIntervals.includes(interval.toString())) {
     return res.status(400).json({
@@ -26,7 +40,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const allSlugs = slugs.toString().split(',');
-  const shouldReturnHistoricalData = interval && range;
+  const shouldReturnHistoricalData = interval && range ? true : false;
 
   if (slugs) {
     const responseAllSlugs = async () => {
@@ -59,9 +73,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const dynamicDate = new Date();
         const results = await Promise.all(promises);
 
-        // @ts-expect-error Catch error from API
         if (results?.length === 1 && results?.[0]?.error) {
-          // @ts-expect-error Catch error from API
           throw new Error(results[0].message);
         }
 
