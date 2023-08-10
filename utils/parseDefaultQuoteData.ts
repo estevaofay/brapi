@@ -1,8 +1,6 @@
 import { IYahooFinanceQuote } from '~/services/getQuoteInformation';
-import { db, serverlessClient } from '~/database';
-import { ITicker, tickers } from '~/database/schemas/schema';
 
-const defaultFields = [
+export const defaultFields = [
   'currency',
   'twoHundredDayAverage',
   'twoHundredDayAverageChange',
@@ -33,6 +31,7 @@ const defaultFields = [
 ] as const;
 
 type ICustomFields = keyof IYahooFinanceQuote;
+type IDefaultFields = Pick<IYahooFinanceQuote, typeof defaultFields[number]>;
 
 interface IParseDefaultQuoteData {
   data: IYahooFinanceQuote;
@@ -53,31 +52,14 @@ export const parseDefaultQuoteData = async ({
     acc[field] = rest[field];
 
     return acc;
-  }, {} as typeof rest);
+    // todo: merge type with customFields if customFields is not undefined
+  }, {} as IDefaultFields);
 
   const parsedQuoteData = {
     ...necessaryFields,
     symbol: slug.toString().toUpperCase(),
-    regularMarketTime: new Date(regularMarketTime * 1000),
+    regularMarketTime: new Date(regularMarketTime * 1000).toISOString(),
   };
 
-  const start = performance.now();
-  await serverlessClient.connect();
-  await db
-    .insert(tickers)
-    .values({
-      ...((parsedQuoteData as unknown) as ITicker),
-    })
-    .onConflictDoUpdate({
-      set: (parsedQuoteData as unknown) as ITicker,
-      target: tickers.symbol,
-    });
-
-  await serverlessClient.clean();
-  const end = performance.now();
-
-  return {
-    took: (end - start).toFixed(0) + 'ms',
-    ...parsedQuoteData,
-  };
+  return parsedQuoteData;
 };

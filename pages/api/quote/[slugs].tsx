@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { processQuoteSlugData } from '~/server/api/handleQuoteSlugs';
 import { validRanges } from '~/constants/validRanges';
 import { validIntervals } from '~/constants/validIntervals';
+import { insertMultipleQuotesAndHistoricalData } from '~/database/mutations/insertMultipleQuotesAndHistoricalData';
 
 interface IQuery {
   slugs?: string;
@@ -73,13 +74,23 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const dynamicDate = new Date();
         const results = await Promise.all(promises);
 
+        // @ts-ignore - typescript is not recognizing the error property
         if (results?.length === 1 && results?.[0]?.error) {
+          // @ts-ignore - typescript is not recognizing the message property
           throw new Error(results[0].message);
         }
+
+        const { took } = (await insertMultipleQuotesAndHistoricalData(
+          // @ts-ignore - TODO: create a type for this
+          results,
+        )) || {
+          took: 0,
+        };
 
         res.setHeader('Cache-Control', 's-maxage=900, stale-while-revalidate');
 
         res.status(200).json({
+          took,
           results,
           requestedAt: dynamicDate,
         });
