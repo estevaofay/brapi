@@ -59,7 +59,7 @@ export const processQuoteSlugData = async ({
     historicalData,
   ] = await Promise.all(promises);
 
-  const parsedQuoteData = parseDefaultQuoteData({
+  const parsedQuoteData = await parseDefaultQuoteData({
     data,
     slug,
   });

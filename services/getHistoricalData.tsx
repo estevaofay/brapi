@@ -74,7 +74,7 @@ export const getHistoricalData = async ({
 
   const dbPrices: IHistoricalDataInsert[] = prices.map((price) => ({
     ...price,
-    symbol: slug,
+    symbol: parsedSlug,
   }));
 
   await serverlessClient.connect();
