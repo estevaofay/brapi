@@ -1,7 +1,19 @@
-import { getDividendsInformation } from '~/services/getDividendsInformation';
-import { getFundamentalInformation } from '~/services/getFundamentalInformation';
-import { getHistoricalData } from '~/services/getHistoricalData';
-import { getQuoteInformation } from '~/services/getQuoteInformation';
+import {
+  getDividendsInformation,
+  IGetDividendsInformationResponse,
+} from '~/services/getDividendsInformation';
+import {
+  getFundamentalInformation,
+  IGetFundamentalInformationResponse,
+} from '~/services/getFundamentalInformation';
+import {
+  getHistoricalData,
+  IGetHistoricalDataResponse,
+} from '~/services/getHistoricalData';
+import {
+  getQuoteInformation,
+  IYahooFinanceQuote,
+} from '~/services/getQuoteInformation';
 import { parseDefaultQuoteData } from '~/utils/parseDefaultQuoteData';
 import { validRanges } from '~/constants/validRanges';
 import { validIntervals } from '~/constants/validIntervals';
@@ -58,7 +70,12 @@ export const processQuoteSlugData = async ({
     fundamentalInformation,
     dividendsData,
     historicalData,
-  ] = await Promise.all(promises);
+  ] = (await Promise.all(promises)) as [
+    IYahooFinanceQuote,
+    IGetFundamentalInformationResponse,
+    IGetDividendsInformationResponse,
+    IGetHistoricalDataResponse[],
+  ];
 
   const parsedQuoteData = await parseDefaultQuoteData({
     data,
