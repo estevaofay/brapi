@@ -10,6 +10,7 @@ export const serverlessClient = new ServerlessClient({
   port: Number(process.env.POSTGRES_PORT) || 5432,
   debug: process.env.NODE_ENV === 'development',
   delayMs: 3000,
+  maxConnections: 1000,
 });
 
 export const db = drizzle(serverlessClient, {
