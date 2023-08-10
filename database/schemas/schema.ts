@@ -41,7 +41,7 @@ export const tickers = pgTable('tickers', {
   fiftyTwoWeekHigh: real('fiftyTwoWeekHigh'),
   priceEarnings: real('priceEarnings'),
   earningsPerShare: real('earningsPerShare'),
-  logoUrl: varchar('logoUrl'),
+  logourl: varchar('logourl'),
 });
 
 export type ITicker = InferModel<typeof tickers, 'select'>;
