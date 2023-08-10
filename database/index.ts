@@ -8,7 +8,7 @@ export const serverlessClient = new ServerlessClient({
   database: process.env.POSTGRES_DB,
   password: process.env.POSTGRES_PASSWORD,
   port: Number(process.env.POSTGRES_PORT) || 5432,
-  debug: true,
+  debug: process.env.NODE_ENV === 'development',
   delayMs: 3000,
 });
 
