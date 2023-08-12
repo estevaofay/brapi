@@ -1,4 +1,8 @@
-import { IYahooFinanceQuote } from '~/services/getQuoteInformation';
+import { ITicker } from '~/database/schemas/schema';
+import {
+  IGetQuoteInformationResponse,
+  IYahooFinanceQuote,
+} from '~/services/getQuoteInformation';
 
 export const defaultFields = [
   'currency',
@@ -34,7 +38,7 @@ type ICustomFields = keyof IYahooFinanceQuote;
 type IDefaultFields = Pick<IYahooFinanceQuote, typeof defaultFields[number]>;
 
 interface IParseDefaultQuoteData {
-  data: IYahooFinanceQuote;
+  data: IGetQuoteInformationResponse;
   slug: string;
   customFields?: ICustomFields[];
 }
@@ -44,7 +48,12 @@ export const parseDefaultQuoteData = async ({
   slug,
   customFields,
 }: IParseDefaultQuoteData) => {
-  const { symbol, regularMarketTime, ...rest } = data ?? {};
+  if (data.hasOwnProperty('updatedAt')) {
+    return data as ITicker;
+  }
+
+  const { symbol, regularMarketTime, ...rest } =
+    (data as IYahooFinanceQuote) ?? {};
 
   const allFields = [...defaultFields, ...(customFields ?? [])];
 

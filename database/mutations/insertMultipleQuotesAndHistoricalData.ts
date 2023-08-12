@@ -3,7 +3,7 @@ import { serverlessClient, db } from '~/database';
 import {
   historicalData,
   IHistoricalDataInsert,
-  ITicker,
+  ITickerInsert,
   tickers,
 } from '~/database/schemas/schema';
 import { processQuoteSlugData } from '~/server/api/handleQuoteSlugs';
@@ -33,17 +33,24 @@ export const insertMultipleQuotesAndHistoricalData = async (
       })
       .flat();
 
-    const allTickers: ITicker[] =
-      responses?.map((response) => {
+    const responsesToSaveInDB = responses.filter((response) => {
+      return !response.hasOwnProperty('updatedAt');
+    });
+
+    const allTickers: ITickerInsert[] =
+      responsesToSaveInDB?.map((responseToSaveInDB) => {
         const {
           dividendsData,
           historicalDataPrice,
           validRanges,
           validIntervals,
           ...quote
-        } = response;
+        } = responseToSaveInDB;
 
-        return quote;
+        return {
+          ...quote,
+          updatedAt: new Date().toISOString(),
+        };
       }) || [];
 
     const excludedTickers = {

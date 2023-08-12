@@ -12,7 +12,7 @@ import {
 } from '~/services/getHistoricalData';
 import {
   getQuoteInformation,
-  IYahooFinanceQuote,
+  IGetQuoteInformationResponse,
 } from '~/services/getQuoteInformation';
 import { parseDefaultQuoteData } from '~/utils/parseDefaultQuoteData';
 import { validRanges } from '~/constants/validRanges';
@@ -43,7 +43,7 @@ export const processQuoteSlugData = async ({
 
   const promises = [];
 
-  promises.push(getQuoteInformation({ parsedSlug }));
+  promises.push(getQuoteInformation({ parsedSlug, slug }));
 
   promises.push(
     fundamental === 'true'
@@ -66,19 +66,19 @@ export const processQuoteSlugData = async ({
   );
 
   const [
-    data,
+    quoteData,
     fundamentalInformation,
     dividendsData,
     historicalData,
   ] = (await Promise.all(promises)) as [
-    IYahooFinanceQuote,
+    IGetQuoteInformationResponse,
     IGetFundamentalInformationResponse,
     IGetDividendsInformationResponse,
     IGetHistoricalDataResponse[],
   ];
 
   const parsedQuoteData = await parseDefaultQuoteData({
-    data,
+    data: quoteData,
     slug,
   });
 
