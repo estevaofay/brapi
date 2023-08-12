@@ -45,10 +45,11 @@ export const tickers = pgTable('tickers', {
   updatedAt: timestamp('updatedAt', {
     withTimezone: true,
     mode: 'string',
-  }),
+  }).defaultNow(),
 });
 
 export type ITicker = InferModel<typeof tickers, 'select'>;
+export type ITickerInsert = InferModel<typeof tickers, 'insert'>;
 
 export const historicalData = pgTable(
   'historical_data',
