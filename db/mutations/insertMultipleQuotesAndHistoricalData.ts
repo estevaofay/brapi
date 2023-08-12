@@ -1,11 +1,7 @@
 import { sql } from 'drizzle-orm';
 import { serverlessClient, db } from '~/db';
-import {
-  historicalData,
-  IHistoricalDataInsert,
-  ITickerInsert,
-  tickers,
-} from '~/db/schemas/schema';
+import { historicalData, IHistoricalDataInsert } from '~/db/schemas/schema';
+import { tickers, INewTicker } from '~/db/schemas/tables/ticker';
 import { processQuoteSlugData } from '~/server/api/handleQuoteSlugs';
 
 type IProcessQuoteSlugDataResponse = Awaited<
@@ -37,7 +33,7 @@ export const insertMultipleQuotesAndHistoricalData = async (
       return !response.hasOwnProperty('updatedAt');
     });
 
-    const allTickers: ITickerInsert[] =
+    const allTickers: INewTicker[] =
       responsesToSaveInDB?.map((responseToSaveInDB) => {
         const {
           dividendsData,

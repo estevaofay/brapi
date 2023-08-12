@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getDBQuote } from '~/db/queries/getDBQuote';
-import { ITicker } from '~/db/schemas/schema';
+import { ITicker } from '~/db/schemas/tables/ticker';
 
 type IYahooFinanceQuoteResponse = {
   optionChain: {
