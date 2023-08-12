@@ -42,6 +42,10 @@ export const tickers = pgTable('tickers', {
   priceEarnings: real('priceEarnings'),
   earningsPerShare: real('earningsPerShare'),
   logourl: varchar('logourl'),
+  updatedAt: timestamp('updatedAt', {
+    withTimezone: true,
+    mode: 'string',
+  }),
 });
 
 export type ITicker = InferModel<typeof tickers, 'select'>;

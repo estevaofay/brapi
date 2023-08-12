@@ -1,0 +1,1 @@
+ALTER TABLE "tickers" ADD COLUMN "updatedAt" timestamp with time zone;
