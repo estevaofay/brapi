@@ -1,4 +1,4 @@
-import { ITicker } from '~/database/schemas/schema';
+import { ITicker } from '~/db/schemas/schema';
 import {
   IGetQuoteInformationResponse,
   IYahooFinanceQuote,

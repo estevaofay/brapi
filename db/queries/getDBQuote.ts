@@ -1,6 +1,6 @@
 import { and, eq, gte, sql } from 'drizzle-orm';
-import { serverlessClient, db } from '~/database';
-import { ITicker, tickers } from '~/database/schemas/schema';
+import { serverlessClient, db } from '~/db';
+import { ITicker, tickers } from '~/db/schemas/schema';
 
 interface IGetDBQuoteResponse {
   ticker: ITicker;

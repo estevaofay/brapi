@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { processQuoteSlugData } from '~/server/api/handleQuoteSlugs';
 import { validRanges } from '~/constants/validRanges';
 import { validIntervals } from '~/constants/validIntervals';
-import { insertMultipleQuotesAndHistoricalData } from '~/database/mutations/insertMultipleQuotesAndHistoricalData';
+import { insertMultipleQuotesAndHistoricalData } from '~/db/mutations/insertMultipleQuotesAndHistoricalData';
 
 interface IQuery {
   slugs?: string;

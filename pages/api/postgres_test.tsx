@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { db, serverlessClient } from '~/database';
+import { db, serverlessClient } from '~/db';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const start = performance.now();

@@ -1,11 +1,11 @@
 import { sql } from 'drizzle-orm';
-import { serverlessClient, db } from '~/database';
+import { serverlessClient, db } from '~/db';
 import {
   historicalData,
   IHistoricalDataInsert,
   ITickerInsert,
   tickers,
-} from '~/database/schemas/schema';
+} from '~/db/schemas/schema';
 import { processQuoteSlugData } from '~/server/api/handleQuoteSlugs';
 
 type IProcessQuoteSlugDataResponse = Awaited<
