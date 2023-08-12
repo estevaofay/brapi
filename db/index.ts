@@ -1,6 +1,6 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
 import ServerlessClient from 'serverless-postgres';
-import * as schema from './schemas/schema';
+import * as schema from './schemas';
 
 export const serverlessClient = new ServerlessClient({
   user: process.env.POSTGRES_USER,

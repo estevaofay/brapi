@@ -1,12 +1,5 @@
-import {
-  pgTable,
-  serial,
-  varchar,
-  real,
-  timestamp,
-  unique,
-} from 'drizzle-orm/pg-core';
 import { InferModel } from 'drizzle-orm';
+import { pgTable, serial, varchar, real, unique } from 'drizzle-orm/pg-core';
 
 export const historicalData = pgTable(
   'historical_data',
@@ -27,4 +20,4 @@ export const historicalData = pgTable(
 );
 
 export type IHistoricalData = InferModel<typeof historicalData, 'select'>;
-export type IHistoricalDataInsert = InferModel<typeof historicalData, 'insert'>;
+export type INewHistoricalData = InferModel<typeof historicalData, 'insert'>;

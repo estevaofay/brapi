@@ -1,6 +1,6 @@
 import { sql } from 'drizzle-orm';
 import { serverlessClient, db } from '~/db';
-import { historicalData, IHistoricalDataInsert } from '~/db/schemas/schema';
+import { INewHistoricalData, historicalData } from '~/db/schemas';
 import { tickers, INewTicker } from '~/db/schemas/tables/ticker';
 import { processQuoteSlugData } from '~/server/api/handleQuoteSlugs';
 
@@ -14,7 +14,7 @@ export const insertMultipleQuotesAndHistoricalData = async (
   try {
     const start = performance.now();
 
-    const allHistoricalDataPrices: IHistoricalDataInsert[] = responses
+    const allHistoricalDataPrices: INewHistoricalData[] = responses
       .map((response) => {
         const { historicalDataPrice: historicalDataResponses } = response;
 
