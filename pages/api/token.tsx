@@ -7,7 +7,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!token) {
     res.status(401).json({
-      error: 'Unauthorized',
+      error: true,
+      message: 'Unauthorized',
     });
     return;
   }
