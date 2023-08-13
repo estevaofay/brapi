@@ -9,7 +9,7 @@ export const apiUsage = pgTable('APIUsage', {
     .references(() => users.id, { onDelete: 'cascade' }),
   endpoint: text('endpoint').notNull(),
   count: text('count').notNull(),
-  createdAt: timestamp('createdAt').notNull(),
+  createdAt: timestamp('createdAt').notNull().defaultNow(),
 });
 
 export type IAPIUsage = InferModel<typeof apiUsage, 'select'>;

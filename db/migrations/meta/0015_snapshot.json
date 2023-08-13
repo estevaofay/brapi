@@ -1,0 +1,620 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "id": "2630a540-ca27-491e-97f4-b954fb123db1",
+  "prevId": "4a6ba756-ea51-46b5-b6ad-48948517460a",
+  "tables": {
+    "Tickers": {
+      "name": "Tickers",
+      "schema": "",
+      "columns": {
+        "symbol": {
+          "name": "symbol",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "currency": {
+          "name": "currency",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "twoHundredDayAverage": {
+          "name": "twoHundredDayAverage",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "twoHundredDayAverageChange": {
+          "name": "twoHundredDayAverageChange",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "twoHundredDayAverageChangePercent": {
+          "name": "twoHundredDayAverageChangePercent",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "marketCap": {
+          "name": "marketCap",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "shortName": {
+          "name": "shortName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "longName": {
+          "name": "longName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketChange": {
+          "name": "regularMarketChange",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketChangePercent": {
+          "name": "regularMarketChangePercent",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketTime": {
+          "name": "regularMarketTime",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketPrice": {
+          "name": "regularMarketPrice",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketDayHigh": {
+          "name": "regularMarketDayHigh",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketDayRange": {
+          "name": "regularMarketDayRange",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketDayLow": {
+          "name": "regularMarketDayLow",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketVolume": {
+          "name": "regularMarketVolume",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketPreviousClose": {
+          "name": "regularMarketPreviousClose",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketOpen": {
+          "name": "regularMarketOpen",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "averageDailyVolume3Month": {
+          "name": "averageDailyVolume3Month",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "averageDailyVolume10Day": {
+          "name": "averageDailyVolume10Day",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekLowChange": {
+          "name": "fiftyTwoWeekLowChange",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekLowChangePercent": {
+          "name": "fiftyTwoWeekLowChangePercent",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekRange": {
+          "name": "fiftyTwoWeekRange",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekHighChange": {
+          "name": "fiftyTwoWeekHighChange",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekHighChangePercent": {
+          "name": "fiftyTwoWeekHighChangePercent",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekLow": {
+          "name": "fiftyTwoWeekLow",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekHigh": {
+          "name": "fiftyTwoWeekHigh",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "priceEarnings": {
+          "name": "priceEarnings",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "earningsPerShare": {
+          "name": "earningsPerShare",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "logourl": {
+          "name": "logourl",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "HistoricalDatas": {
+      "name": "HistoricalDatas",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "name": "date",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "open": {
+          "name": "open",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "high": {
+          "name": "high",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "low": {
+          "name": "low",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "close": {
+          "name": "close",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "volume": {
+          "name": "volume",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adjustedClose": {
+          "name": "adjustedClose",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "HistoricalDatas_symbol_date_unique": {
+          "name": "HistoricalDatas_symbol_date_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "symbol",
+            "date"
+          ]
+        }
+      }
+    },
+    "VerificationToken": {
+      "name": "VerificationToken",
+      "schema": "",
+      "columns": {
+        "identifier": {
+          "name": "identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "name": "expires",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "VerificationToken_identifier_token": {
+          "name": "VerificationToken_identifier_token",
+          "columns": [
+            "identifier",
+            "token"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "User": {
+      "name": "User",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "emailVerified": {
+          "name": "emailVerified",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "Account": {
+      "name": "Account",
+      "schema": "",
+      "columns": {
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "providerAccountId": {
+          "name": "providerAccountId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "access_token": {
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "token_type": {
+          "name": "token_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scope": {
+          "name": "scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_token": {
+          "name": "id_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "session_state": {
+          "name": "session_state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "Account_userId_User_id_fk": {
+          "name": "Account_userId_User_id_fk",
+          "tableFrom": "Account",
+          "tableTo": "User",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "Account_provider_providerAccountId": {
+          "name": "Account_provider_providerAccountId",
+          "columns": [
+            "provider",
+            "providerAccountId"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "Session": {
+      "name": "Session",
+      "schema": "",
+      "columns": {
+        "sessionToken": {
+          "name": "sessionToken",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "name": "expires",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "Session_userId_User_id_fk": {
+          "name": "Session_userId_User_id_fk",
+          "tableFrom": "Session",
+          "tableTo": "User",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "APIUsage": {
+      "name": "APIUsage",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "endpoint": {
+          "name": "endpoint",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "count": {
+          "name": "count",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "APIUsage_userId_User_id_fk": {
+          "name": "APIUsage_userId_User_id_fk",
+          "tableFrom": "APIUsage",
+          "tableTo": "User",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "APIToken": {
+      "name": "APIToken",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "active": {
+          "name": "active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "APIToken_token_index": {
+          "name": "APIToken_token_index",
+          "columns": [
+            "token"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "APIToken_userId_User_id_fk": {
+          "name": "APIToken_userId_User_id_fk",
+          "tableFrom": "APIToken",
+          "tableTo": "User",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}

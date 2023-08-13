@@ -17,7 +17,7 @@ export const apiToken = pgTable(
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     token: text('token').notNull(),
-    createdAt: timestamp('createdAt').notNull(),
+    createdAt: timestamp('createdAt').notNull().defaultNow(),
     active: boolean('active').notNull(),
   },
   (table) => ({
