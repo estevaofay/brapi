@@ -10,7 +10,7 @@ export const createAPIToken = ({
   userId,
 }: ICreateAPIToken): IGetAPITokenResponse => {
   // todo: sign jwt with userId as data and process.env.JWT_SECRET as secret
-  let token = 'random.jwt.token';
+  let token = userId;
 
   return {
     token,
