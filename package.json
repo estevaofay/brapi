@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate-migration": "drizzle-kit generate:pg --out ./database/migrations --schema ./database/schemas/schema.ts"
+    "db:generate": "drizzle-kit generate:pg",
+    "db:push": "ts-node ./db/migrate.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^0.1.11",
@@ -18,6 +19,7 @@
     "d3-format": "^3.1.0",
     "d3-time-format": "^4.1.0",
     "daisyui": "^2.51.3",
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.28.1",
     "encoding": "^0.1.13",
     "eslint-config-next": "^13.2.4",
@@ -25,6 +27,7 @@
     "he": "1.2.0",
     "next": "^13.4.12",
     "next-mdx-remote": "^4.4.1",
+    "pg": "^8.11.2",
     "prettier": "2.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
