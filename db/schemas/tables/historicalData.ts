@@ -2,7 +2,7 @@ import { InferModel } from 'drizzle-orm';
 import { pgTable, serial, varchar, real, unique } from 'drizzle-orm/pg-core';
 
 export const historicalData = pgTable(
-  'historical_data',
+  'HistoricalDatas',
   {
     id: serial('id').primaryKey(),
     symbol: varchar('symbol').notNull(),

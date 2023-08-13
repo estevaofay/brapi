@@ -1,7 +1,7 @@
 import { pgTable, varchar, real, timestamp } from 'drizzle-orm/pg-core';
 import { InferModel } from 'drizzle-orm';
 
-export const tickers = pgTable('tickers', {
+export const tickers = pgTable('Tickers', {
   symbol: varchar('symbol').primaryKey(),
   currency: varchar('currency'),
   twoHundredDayAverage: real('twoHundredDayAverage'),
