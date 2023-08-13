@@ -41,31 +41,36 @@ export const getHistoricalData = async ({
   interval,
   range,
 }: IGetHistoricalData): Promise<IGetHistoricalDataResponse[]> => {
-  const historicalResponse = await axios.get<IYahooFinanceResponse>(
-    `https://query1.finance.yahoo.com/v8/finance/chart/${parsedSlug}${
-      interval && range
-        ? `?includePrePost=false&interval=${interval}&useYfid=true&range=${range}`
-        : '?includePrePost=false&interval=1d&useYfid=true&range=1mo'
-    }`,
-  );
+  try {
+    const historicalResponse = await axios.get<IYahooFinanceResponse>(
+      `https://query1.finance.yahoo.com/v8/finance/chart/${parsedSlug}${
+        interval && range
+          ? `?includePrePost=false&interval=${interval}&useYfid=true&range=${range}`
+          : '?includePrePost=false&interval=1d&useYfid=true&range=1mo'
+      }`,
+    );
 
-  const result = historicalResponse.data.chart.result?.[0];
+    const result = historicalResponse.data.chart.result?.[0];
 
-  const { timestamp, indicators } = result || {};
-  const { quote, adjclose } = indicators || {};
-  const { low, high, open, close, volume } = quote[0];
+    const { timestamp, indicators } = result || {};
+    const { quote, adjclose } = indicators || {};
+    const { low, high, open, close, volume } = quote[0];
 
-  const { adjclose: adjustedClose } = adjclose?.[0] || {};
+    const { adjclose: adjustedClose } = adjclose?.[0] || {};
 
-  const prices = timestamp?.map((date, index) => ({
-    date,
-    open: open?.[index] ?? null,
-    high: high?.[index] ?? null,
-    low: low?.[index] ?? null,
-    close: close?.[index] ?? null,
-    volume: volume?.[index] ?? null,
-    adjustedClose: adjustedClose?.[index] ?? null,
-  }));
+    const prices = timestamp?.map((date, index) => ({
+      date,
+      open: open?.[index] ?? null,
+      high: high?.[index] ?? null,
+      low: low?.[index] ?? null,
+      close: close?.[index] ?? null,
+      volume: volume?.[index] ?? null,
+      adjustedClose: adjustedClose?.[index] ?? null,
+    }));
 
-  return prices ?? [];
+    return prices ?? [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };
