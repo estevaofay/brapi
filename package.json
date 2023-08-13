@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "drizzle-kit generate:pg",
+    "db:push": "ts-node ./db/migrate.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^0.1.11",
@@ -17,12 +19,15 @@
     "d3-format": "^3.1.0",
     "d3-time-format": "^4.1.0",
     "daisyui": "^2.51.3",
+    "dotenv": "^16.3.1",
+    "drizzle-orm": "^0.28.1",
     "encoding": "^0.1.13",
     "eslint-config-next": "^13.2.4",
     "gray-matter": "^4.0.3",
     "he": "1.2.0",
     "next": "^13.4.12",
     "next-mdx-remote": "^4.4.1",
+    "pg": "^8.11.2",
     "prettier": "2.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -30,6 +35,7 @@
     "react-hot-toast": "^2.4.0",
     "react-virtualized-auto-sizer": "^1.0.7",
     "request-ip": "2.1.3",
+    "serverless-postgres": "^2.1.0",
     "sharp": "^0.31.3",
     "swagger-ui-react": "^4.15.2"
   },
@@ -46,6 +52,7 @@
     "@typescript-eslint/parser": "4.14.1",
     "autoprefixer": "^10.4.7",
     "critters": "^0.0.16",
+    "drizzle-kit": "^0.19.12",
     "eslint": "7.19.0",
     "eslint-config-prettier": "7.2.0",
     "eslint-loader": "4.0.2",

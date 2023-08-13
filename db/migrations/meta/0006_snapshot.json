@@ -1,0 +1,280 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "id": "03f3ef79-22e1-4a86-bc1d-2cdca602a320",
+  "prevId": "38249198-e719-4ccb-9d84-34bd03bfdbe0",
+  "tables": {
+    "historical_data": {
+      "name": "historical_data",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "name": "date",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "open": {
+          "name": "open",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "high": {
+          "name": "high",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "low": {
+          "name": "low",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "close": {
+          "name": "close",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "volume": {
+          "name": "volume",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adjustedClose": {
+          "name": "adjustedClose",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "historical_data_symbol_date_unique": {
+          "name": "historical_data_symbol_date_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "symbol",
+            "date"
+          ]
+        }
+      }
+    },
+    "tickers": {
+      "name": "tickers",
+      "schema": "",
+      "columns": {
+        "symbol": {
+          "name": "symbol",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "currency": {
+          "name": "currency",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "twoHundredDayAverage": {
+          "name": "twoHundredDayAverage",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "twoHundredDayAverageChange": {
+          "name": "twoHundredDayAverageChange",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "twoHundredDayAverageChangePercent": {
+          "name": "twoHundredDayAverageChangePercent",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "marketCap": {
+          "name": "marketCap",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "shortName": {
+          "name": "shortName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "longName": {
+          "name": "longName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketChange": {
+          "name": "regularMarketChange",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketChangePercent": {
+          "name": "regularMarketChangePercent",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketTime": {
+          "name": "regularMarketTime",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketPrice": {
+          "name": "regularMarketPrice",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketDayHigh": {
+          "name": "regularMarketDayHigh",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketDayRange": {
+          "name": "regularMarketDayRange",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketDayLow": {
+          "name": "regularMarketDayLow",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketVolume": {
+          "name": "regularMarketVolume",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketPreviousClose": {
+          "name": "regularMarketPreviousClose",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regularMarketOpen": {
+          "name": "regularMarketOpen",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "averageDailyVolume3Month": {
+          "name": "averageDailyVolume3Month",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "averageDailyVolume10Day": {
+          "name": "averageDailyVolume10Day",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekLowChange": {
+          "name": "fiftyTwoWeekLowChange",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekLowChangePercent": {
+          "name": "fiftyTwoWeekLowChangePercent",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekRange": {
+          "name": "fiftyTwoWeekRange",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekHighChange": {
+          "name": "fiftyTwoWeekHighChange",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekHighChangePercent": {
+          "name": "fiftyTwoWeekHighChangePercent",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekLow": {
+          "name": "fiftyTwoWeekLow",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiftyTwoWeekHigh": {
+          "name": "fiftyTwoWeekHigh",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "priceEarnings": {
+          "name": "priceEarnings",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "earningsPerShare": {
+          "name": "earningsPerShare",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "logourl": {
+          "name": "logourl",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {
+      "\"tickers\".\"logoUrl\"": "\"tickers\".\"logourl\""
+    }
+  }
+}

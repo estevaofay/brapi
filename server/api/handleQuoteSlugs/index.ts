@@ -1,19 +1,32 @@
-import { getDividendsInformation } from '~/services/getDividendsInformation';
-import { getFundamentalInformation } from '~/services/getFundamentalInformation';
-import { getHistoricalData } from '~/services/getHistoricalData';
-import { getQuoteInformation } from '~/services/getQuoteInformation';
+import {
+  getDividendsInformation,
+  IGetDividendsInformationResponse,
+} from '~/services/getDividendsInformation';
+import {
+  getFundamentalInformation,
+  IGetFundamentalInformationResponse,
+} from '~/services/getFundamentalInformation';
+import {
+  getHistoricalData,
+  IGetHistoricalDataResponse,
+} from '~/services/getHistoricalData';
+import {
+  getQuoteInformation,
+  IGetQuoteInformationResponse,
+} from '~/services/getQuoteInformation';
 import { parseDefaultQuoteData } from '~/utils/parseDefaultQuoteData';
 import { validRanges } from '~/constants/validRanges';
 import { validIntervals } from '~/constants/validIntervals';
 
 const resolvedPromise = Promise.resolve();
 
-interface IProcessQuoteSlugData {
-  fundamental: boolean;
+export interface IProcessQuoteSlugData {
+  slug: string;
+  fundamental: string;
   dividends: string;
   shouldReturnHistoricalData: boolean;
-  interval: number;
-  range: number;
+  interval: string;
+  range: string;
 }
 
 export const processQuoteSlugData = async ({
@@ -23,14 +36,14 @@ export const processQuoteSlugData = async ({
   shouldReturnHistoricalData,
   interval,
   range,
-}): Promise<IProcessQuoteSlugData> => {
+}: IProcessQuoteSlugData) => {
   const isBrazilianStock = /\d/.test(slug);
 
   const parsedSlug = isBrazilianStock ? `${slug}.SA` : slug;
 
   const promises = [];
 
-  promises.push(getQuoteInformation({ parsedSlug }));
+  promises.push(getQuoteInformation({ parsedSlug, slug }));
 
   promises.push(
     fundamental === 'true'
@@ -53,14 +66,19 @@ export const processQuoteSlugData = async ({
   );
 
   const [
-    data,
+    quoteData,
     fundamentalInformation,
     dividendsData,
     historicalData,
-  ] = await Promise.all(promises);
+  ] = (await Promise.all(promises)) as [
+    IGetQuoteInformationResponse,
+    IGetFundamentalInformationResponse,
+    IGetDividendsInformationResponse,
+    IGetHistoricalDataResponse[],
+  ];
 
-  const parsedQuoteData = parseDefaultQuoteData({
-    data,
+  const parsedQuoteData = await parseDefaultQuoteData({
+    data: quoteData,
     slug,
   });
 

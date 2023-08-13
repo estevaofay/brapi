@@ -1,0 +1,1 @@
+ALTER TABLE "tickers" RENAME COLUMN "logoUrl" TO "logourl";

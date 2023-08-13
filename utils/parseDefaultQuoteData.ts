@@ -1,6 +1,10 @@
-import { IYahooFinanceQuote } from '~/services/getQuoteInformation';
+import { ITicker } from '~/db/schemas/tables/ticker';
+import {
+  IGetQuoteInformationResponse,
+  IYahooFinanceQuote,
+} from '~/services/getQuoteInformation';
 
-const defaultFields = [
+export const defaultFields = [
   'currency',
   'twoHundredDayAverage',
   'twoHundredDayAverageChange',
@@ -31,19 +35,25 @@ const defaultFields = [
 ] as const;
 
 type ICustomFields = keyof IYahooFinanceQuote;
+type IDefaultFields = Pick<IYahooFinanceQuote, typeof defaultFields[number]>;
 
 interface IParseDefaultQuoteData {
-  data: IYahooFinanceQuote;
+  data: IGetQuoteInformationResponse;
   slug: string;
   customFields?: ICustomFields[];
 }
 
-export const parseDefaultQuoteData = ({
+export const parseDefaultQuoteData = async ({
   data,
   slug,
   customFields,
 }: IParseDefaultQuoteData) => {
-  const { symbol, regularMarketTime, ...rest } = data ?? {};
+  if (data.hasOwnProperty('updatedAt')) {
+    return data as ITicker;
+  }
+
+  const { symbol, regularMarketTime, ...rest } =
+    (data as IYahooFinanceQuote) ?? {};
 
   const allFields = [...defaultFields, ...(customFields ?? [])];
 
@@ -51,11 +61,14 @@ export const parseDefaultQuoteData = ({
     acc[field] = rest[field];
 
     return acc;
-  }, {} as typeof rest);
+    // todo: merge type with customFields if customFields is not undefined
+  }, {} as IDefaultFields);
 
-  return {
+  const parsedQuoteData = {
     ...necessaryFields,
     symbol: slug.toString().toUpperCase(),
-    regularMarketTime: new Date(regularMarketTime * 1000),
+    regularMarketTime: new Date(regularMarketTime * 1000).toISOString(),
   };
+
+  return parsedQuoteData;
 };

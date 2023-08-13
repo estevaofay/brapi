@@ -1,12 +1,14 @@
 import axios from 'axios';
+import { getDBQuote } from '~/db/queries/getDBQuote';
+import { ITicker } from '~/db/schemas/tables/ticker';
 
-interface IYahooFinanceQuoteResponse {
+type IYahooFinanceQuoteResponse = {
   optionChain: {
     result: {
       quote: IYahooFinanceQuote;
     }[];
   };
-}
+};
 
 export interface IYahooFinanceQuote {
   language: string;
@@ -86,13 +88,23 @@ export interface IYahooFinanceQuote {
   symbol: string;
 }
 
+export type IGetQuoteInformationResponse = ITicker | IYahooFinanceQuote;
+
 interface IGetQuoteInformation {
   parsedSlug: string;
+  slug: string;
 }
 
 export const getQuoteInformation = async ({
   parsedSlug,
-}: IGetQuoteInformation): Promise<IYahooFinanceQuote> => {
+  slug,
+}: IGetQuoteInformation): Promise<IGetQuoteInformationResponse> => {
+  const ticker = await getDBQuote({ slug });
+
+  if (ticker?.ticker) {
+    return ticker.ticker;
+  }
+
   const response = await axios.get<IYahooFinanceQuoteResponse>(
     `https://query1.finance.yahoo.com/v7/finance/options/${parsedSlug}`,
   );

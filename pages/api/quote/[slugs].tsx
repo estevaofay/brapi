@@ -3,11 +3,26 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { processQuoteSlugData } from '~/server/api/handleQuoteSlugs';
 import { validRanges } from '~/constants/validRanges';
 import { validIntervals } from '~/constants/validIntervals';
+import { insertMultipleQuotesAndHistoricalData } from '~/db/mutations/insertMultipleQuotesAndHistoricalData';
+
+interface IQuery {
+  slugs?: string;
+  interval?: string;
+  range?: string;
+  fundamental?: string;
+  dividends?: string;
+}
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   logHost(req, 'quote');
 
-  const { slugs, interval, range, fundamental, dividends } = req.query;
+  const {
+    slugs,
+    interval,
+    range,
+    fundamental,
+    dividends,
+  } = req.query as IQuery;
 
   if (interval && !validIntervals.includes(interval.toString())) {
     return res.status(400).json({
@@ -26,7 +41,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const allSlugs = slugs.toString().split(',');
-  const shouldReturnHistoricalData = interval && range;
+  const shouldReturnHistoricalData = interval && range ? true : false;
 
   if (slugs) {
     const responseAllSlugs = async () => {
@@ -41,6 +56,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             shouldReturnHistoricalData,
           });
         } catch (err) {
+          console.log({ err });
+
           const errorMessage = err?.response?.data?.chart?.error?.description;
 
           return {
@@ -57,17 +74,25 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const dynamicDate = new Date();
         const results = await Promise.all(promises);
 
-        // @ts-expect-error Catch error from API
+        // @ts-ignore - typescript is not recognizing the error property
         if (results?.length === 1 && results?.[0]?.error) {
-          // @ts-expect-error Catch error from API
+          // @ts-ignore - typescript is not recognizing the message property
           throw new Error(results[0].message);
         }
+
+        const { took } = (await insertMultipleQuotesAndHistoricalData(
+          // @ts-ignore - TODO: create a type for this
+          results,
+        )) || {
+          took: 0,
+        };
 
         res.setHeader('Cache-Control', 's-maxage=900, stale-while-revalidate');
 
         res.status(200).json({
           results,
           requestedAt: dynamicDate,
+          took,
         });
       } catch (err) {
         res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate');

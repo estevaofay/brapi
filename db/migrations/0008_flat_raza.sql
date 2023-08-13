@@ -1,0 +1,1 @@
+ALTER TABLE "tickers" ALTER COLUMN "updatedAt" SET DEFAULT now();
