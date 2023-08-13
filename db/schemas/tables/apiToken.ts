@@ -1,16 +1,18 @@
+import { InferModel } from 'drizzle-orm';
 import {
   pgTable,
   text,
   timestamp,
   boolean,
   uniqueIndex,
+  uuid,
 } from 'drizzle-orm/pg-core';
 import { users } from '~/db/schemas/tables/user';
 
 export const apiToken = pgTable(
   'APIToken',
   {
-    id: text('id').notNull().primaryKey(),
+    id: uuid('id').notNull().defaultRandom().primaryKey(),
     userId: text('userId')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
@@ -22,3 +24,6 @@ export const apiToken = pgTable(
     tokenIndex: uniqueIndex().on(table.token),
   }),
 );
+
+export type IAPIToken = InferModel<typeof apiToken, 'select'>;
+export type INewAPIToken = InferModel<typeof apiToken, 'insert'>;
