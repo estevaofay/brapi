@@ -4,6 +4,8 @@ import { processQuoteSlugData } from '~/server/api/handleQuoteSlugs';
 import { validRanges } from '~/constants/validRanges';
 import { validIntervals } from '~/constants/validIntervals';
 import { insertMultipleQuotesAndHistoricalData } from '~/db/mutations/insertMultipleQuotesAndHistoricalData';
+import { createAPIUsage } from '~/db/mutations/createAPIUsage';
+import { decodeAPIToken } from '~/utils/apiToken';
 
 interface IQuery {
   slugs?: string;
@@ -11,6 +13,7 @@ interface IQuery {
   range?: string;
   fundamental?: string;
   dividends?: string;
+  token?: string;
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -22,6 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     range,
     fundamental,
     dividends,
+    token,
   } = req.query as IQuery;
 
   if (interval && !validIntervals.includes(interval.toString())) {
@@ -86,6 +90,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         )) || {
           took: 0,
         };
+
+        if (token) {
+          const { userId } = decodeAPIToken(token);
+
+          await createAPIUsage({
+            count: results.length,
+            endpoint: 'quote',
+            userId: token,
+          });
+        }
 
         res.setHeader('Cache-Control', 's-maxage=900, stale-while-revalidate');
 

@@ -10,11 +10,15 @@ export const createAPIToken = ({
   userId,
 }: ICreateAPIToken): IGetAPITokenResponse => {
   // todo: sign jwt with userId as data and process.env.JWT_SECRET as secret
-  let token = userId;
 
   return {
-    token,
+    token: userId,
   };
+};
+
+export const decodeAPIToken = (token: string) => {
+  // todo: decode token
+  return { userId: 'userId' };
 };
 
 export const isValidAPIToken = (token: string): boolean => {
