@@ -1,0 +1,1 @@
+ALTER TABLE "APIUsage" ADD COLUMN "count" integer NOT NULL;

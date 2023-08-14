@@ -120,6 +120,20 @@
       "when": 1691951306194,
       "tag": "0016_faithful_maria_hill",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "5",
+      "when": 1691981705030,
+      "tag": "0017_majestic_vindicator",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1691981715410,
+      "tag": "0018_flowery_hellfire_club",
+      "breakpoints": true
     }
   ]
 }

@@ -1,5 +1,5 @@
 import { InferModel } from 'drizzle-orm';
-import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
+import { integer, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 import { users } from '~/db/schemas/tables/user';
 
 export const apiUsage = pgTable('APIUsage', {
@@ -8,7 +8,7 @@ export const apiUsage = pgTable('APIUsage', {
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   endpoint: text('endpoint').notNull(),
-  count: text('count').notNull(),
+  count: integer('count').notNull(),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
 });
 
