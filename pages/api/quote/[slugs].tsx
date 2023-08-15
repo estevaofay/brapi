@@ -5,7 +5,8 @@ import { validRanges } from '~/constants/validRanges';
 import { validIntervals } from '~/constants/validIntervals';
 import { insertMultipleQuotesAndHistoricalData } from '~/db/mutations/insertMultipleQuotesAndHistoricalData';
 import { createAPIUsage } from '~/db/mutations/createAPIUsage';
-import { decodeAPIToken } from '~/utils/apiToken';
+import { isAPITokenActive } from '~/db/queries/isAPITokenActive';
+import { decodeAPIToken } from '~/utils/handleAPITokenJWT';
 
 interface IQuery {
   slugs?: string;
@@ -43,6 +44,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       message: `Range inválido. Ranges válidos: ${validRanges.join(', ')}`,
     });
   }
+
+  const tokenData = token?.length ? decodeAPIToken(token) : null;
+  const apiTokenId = tokenData?.apiTokenId || null;
+  const userId = tokenData?.userId || null;
+
+  const isAPITokenValid = await isAPITokenActive({
+    apiTokenId,
+  });
+
+  console.log({ isAPITokenValid });
 
   const allSlugs = slugs.toString().split(',');
   const shouldReturnHistoricalData = interval && range ? true : false;
@@ -91,13 +102,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           took: 0,
         };
 
-        if (token) {
-          const { userId } = decodeAPIToken(token);
-
+        if (userId) {
           await createAPIUsage({
             count: results.length,
             endpoint: 'quote',
-            userId: token,
+            userId: userId,
           });
         }
 

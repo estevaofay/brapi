@@ -1,4 +1,5 @@
 import { getServerSession } from 'next-auth';
+import { CreateNewToken } from '~/app/dashboard/components/CreateNewToken';
 
 export default async function DashboardPage() {
   const session = await getServerSession();
@@ -14,6 +15,7 @@ export default async function DashboardPage() {
         <div className="flex flex-col">
           <p className="text-2xl">{session.user.name}</p>
           <p className="text-xl">{session.user.email}</p>
+          <CreateNewToken />
         </div>
       </div>
     </div>
