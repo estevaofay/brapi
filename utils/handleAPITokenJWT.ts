@@ -1,41 +1,29 @@
-import { sign, verify } from 'jsonwebtoken';
+import short from 'short-uuid';
 
-interface IEncodeAPITokenResponse {
+interface IToken {
   token: string;
 }
 
-interface IEncodeAPIToken {
+interface IAPITokenId {
   apiTokenId: string;
-  userId: string;
 }
 
-export const encodeAPIToken = ({
-  apiTokenId,
-  userId,
-}: IEncodeAPIToken): IEncodeAPITokenResponse => {
-  const token = sign({ apiTokenId, userId }, process.env.API_TOKEN_JWT_SECRET, {
-    expiresIn: '10y',
-    algorithm: 'HS256',
-    noTimestamp: true,
-  });
+const translator = short(short.constants.flickrBase58, {
+  consistentLength: true,
+});
+
+export const shortenAPIToken = ({ apiTokenId }: IAPITokenId): IToken => {
+  const token = translator.fromUUID(apiTokenId);
 
   return {
     token,
   };
 };
 
-interface IDecodeAPIToken {
-  apiTokenId: string;
-  userId: string;
-}
-
-export const decodeAPIToken = (token: string): IDecodeAPIToken => {
-  const data = verify(token, process.env.API_TOKEN_JWT_SECRET, {
-    algorithms: ['HS256'],
-  }) as IDecodeAPIToken;
+export const translateAPIToken = ({ token }: IToken): IAPITokenId => {
+  const apiTokenId = translator.toUUID(token);
 
   return {
-    apiTokenId: data?.apiTokenId,
-    userId: data?.userId,
+    apiTokenId,
   };
 };

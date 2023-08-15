@@ -1,18 +1,18 @@
 import { and, eq } from 'drizzle-orm';
 import { db, serverlessClient } from '~/db';
-import { apiToken } from '~/db/schemas/tables/apiToken';
+import { apiToken, IAPIToken } from '~/db/schemas/tables/apiToken';
 
-interface IIsAPITokenActive {
+interface IGetAPITokenFromAPITokenId {
   apiTokenId: string;
 }
 
-export const isAPITokenActive = async ({
+export const getAPITokenFromAPITokenId = async ({
   apiTokenId,
-}: IIsAPITokenActive): Promise<boolean> => {
+}: IGetAPITokenFromAPITokenId): Promise<IAPIToken> => {
   const start = performance.now();
   await serverlessClient.connect();
 
-  const data = await db
+  const [data] = await db
     .select()
     .from(apiToken)
     .where(and(eq(apiToken.id, apiTokenId), eq(apiToken.active, true)))
@@ -23,5 +23,5 @@ export const isAPITokenActive = async ({
 
   console.log(`isAPITokenActive: ${end - start}ms`);
 
-  return data?.length > 0 ? true : false;
+  return data;
 };

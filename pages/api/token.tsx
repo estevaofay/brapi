@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getToken } from 'next-auth/jwt';
 import { createAPIToken } from '~/db/mutations/createAPIToken';
-import { getAPITokens } from '~/db/queries/getAPITokens';
-import { encodeAPIToken } from '~/utils/handleAPITokenJWT';
+import { getAPITokensFromUserId } from '~/db/queries/getAPITokensFromUserId';
+import { shortenAPIToken } from '~/utils/handleAPITokenJWT';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -36,15 +36,14 @@ const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     try {
-      const apiTokens = await getAPITokens({
+      const apiTokens = await getAPITokensFromUserId({
         userId: token.userId,
       });
 
       const encodedAPITokens = apiTokens.data.map((apiToken) => ({
         ...apiToken,
-        encodedAPIToken: encodeAPIToken({
+        encodedAPIToken: shortenAPIToken({
           apiTokenId: apiToken.id,
-          userId: token.userId,
         }).token,
       }));
 
@@ -83,13 +82,14 @@ const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
         userId: token.userId,
       });
 
-      const encodedAPIToken = encodeAPIToken({
+      console.log({ apiToken });
+
+      const { token: shortenedAPIToken } = shortenAPIToken({
         apiTokenId: apiToken.data.id,
-        userId: token.userId,
       });
 
       res.status(200).json({
-        encodedAPIToken,
+        shortenedAPIToken,
         took: apiToken.took,
       });
     } catch (error) {

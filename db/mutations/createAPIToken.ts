@@ -22,13 +22,14 @@ export const createAPIToken = async ({
       .values({
         userId,
       })
-      .onConflictDoNothing();
+      .onConflictDoNothing()
+      .returning();
 
     const end = performance.now();
     await serverlessClient.clean();
 
     return {
-      data,
+      data: data?.[0],
       took: `${end - start}ms`,
     };
   } catch (error) {

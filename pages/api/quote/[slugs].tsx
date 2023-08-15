@@ -5,8 +5,8 @@ import { validRanges } from '~/constants/validRanges';
 import { validIntervals } from '~/constants/validIntervals';
 import { insertMultipleQuotesAndHistoricalData } from '~/db/mutations/insertMultipleQuotesAndHistoricalData';
 import { createAPIUsage } from '~/db/mutations/createAPIUsage';
-import { isAPITokenActive } from '~/db/queries/isAPITokenActive';
-import { decodeAPIToken } from '~/utils/handleAPITokenJWT';
+import { translateAPIToken } from '~/utils/handleAPITokenJWT';
+import { getAPITokenFromAPITokenId } from '~/db/queries/getAPITokenFromAPITokenId';
 
 interface IQuery {
   slugs?: string;
@@ -45,17 +45,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  const tokenData = token?.length ? decodeAPIToken(token) : null;
-  const apiTokenId = tokenData?.apiTokenId || null;
-  const userId = tokenData?.userId || null;
+  const { apiTokenId } = token?.length
+    ? translateAPIToken({ token })
+    : null || {};
 
-  const isAPITokenValid = await isAPITokenActive({
-    apiTokenId,
-  });
+  const { active: isAPITokenValid, userId } =
+    (await getAPITokenFromAPITokenId({
+      apiTokenId,
+    })) || {};
 
   console.log({ isAPITokenValid });
 
-  if (token && isAPITokenValid === false) {
+  if (token && !isAPITokenValid) {
     return res.status(401).json({
       error: true,
       message: 'Token inválido',
@@ -117,7 +118,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           });
         }
 
-        res.setHeader('Cache-Control', 's-maxage=900, stale-while-revalidate');
+        const maxAge = isAPITokenValid ? 600 : 900;
+
+        res.setHeader(
+          'Cache-Control',
+          `s-maxage=${maxAge}, stale-while-revalidate`,
+        );
 
         res.status(200).json({
           results,

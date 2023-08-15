@@ -2,18 +2,18 @@ import { eq } from 'drizzle-orm';
 import { db, serverlessClient } from '~/db';
 import { apiToken, IAPIToken } from '~/db/schemas/tables/apiToken';
 
-interface IGetAPITokens {
+interface IGetAPITokensFromUserId {
   userId: string;
 }
 
-interface IGetAPITokensResponse {
+interface IGetAPITokensFromUserIdResponse {
   data: IAPIToken[];
   took: string;
 }
 
-export const getAPITokens = async ({
+export const getAPITokensFromUserId = async ({
   userId,
-}: IGetAPITokens): Promise<IGetAPITokensResponse> => {
+}: IGetAPITokensFromUserId): Promise<IGetAPITokensFromUserIdResponse> => {
   try {
     const start = performance.now();
     await serverlessClient.connect();
