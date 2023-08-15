@@ -13,13 +13,11 @@ export const encodeAPIToken = ({
   apiTokenId,
   userId,
 }: IEncodeAPIToken): IEncodeAPITokenResponse => {
-  const token = sign({ apiTokenId, userId }, process.env.JWT_SECRET, {
+  const token = sign({ apiTokenId, userId }, process.env.API_TOKEN_JWT_SECRET, {
     expiresIn: '10y',
     algorithm: 'HS256',
     noTimestamp: true,
   });
-
-  console.log({ token });
 
   return {
     token,
@@ -32,11 +30,9 @@ interface IDecodeAPIToken {
 }
 
 export const decodeAPIToken = (token: string): IDecodeAPIToken => {
-  const data = verify(token, process.env.JWT_SECRET, {
+  const data = verify(token, process.env.API_TOKEN_JWT_SECRET, {
     algorithms: ['HS256'],
   }) as IDecodeAPIToken;
-
-  console.log({ data });
 
   return {
     apiTokenId: data?.apiTokenId,

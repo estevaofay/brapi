@@ -40,12 +40,17 @@ const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {
         userId: token.userId,
       });
 
-      const encodedAPITokens = apiTokens.map((apiToken) =>
-        encodeAPIToken({ apiTokenId: apiToken.id, userId: token.userId }),
-      );
+      const encodedAPITokens = apiTokens.data.map((apiToken) => ({
+        ...apiToken,
+        encodedAPIToken: encodeAPIToken({
+          apiTokenId: apiToken.id,
+          userId: token.userId,
+        }).token,
+      }));
 
       res.status(200).json({
         encodedAPITokens,
+        took: apiTokens.took,
       });
     } catch (error) {
       res.status(400).json({
@@ -79,12 +84,13 @@ const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
       });
 
       const encodedAPIToken = encodeAPIToken({
-        apiTokenId: apiToken.id,
+        apiTokenId: apiToken.data.id,
         userId: token.userId,
       });
 
       res.status(200).json({
         encodedAPIToken,
+        took: apiToken.took,
       });
     } catch (error) {
       res.status(400).json({
