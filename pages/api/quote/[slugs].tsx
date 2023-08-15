@@ -111,11 +111,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           took: 0,
         };
 
-        if (userId) {
+        if (userId && apiTokenId) {
           await createAPIUsage({
             count: results.length,
             endpoint: 'quote',
             userId: userId,
+            apiTokenId,
           });
         }
 
