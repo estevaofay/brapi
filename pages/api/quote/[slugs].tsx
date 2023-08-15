@@ -47,12 +47,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { apiTokenId } = token?.length
     ? translateAPIToken({ token })
-    : null || {};
+    : ({} as ReturnType<typeof translateAPIToken>);
 
-  const { active: isAPITokenValid, userId } =
-    (await getAPITokenFromAPITokenId({
-      apiTokenId,
-    })) || {};
+  const { active: isAPITokenValid, userId } = apiTokenId
+    ? (await getAPITokenFromAPITokenId({
+        apiTokenId,
+      })) || {}
+    : ({} as Awaited<ReturnType<typeof getAPITokenFromAPITokenId>>);
 
   console.log({ isAPITokenValid });
 
