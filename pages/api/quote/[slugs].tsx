@@ -55,6 +55,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   console.log({ isAPITokenValid });
 
+  if (token && isAPITokenValid === false) {
+    return res.status(401).json({
+      error: true,
+      message: 'Token inválido',
+    });
+  }
+
   const allSlugs = slugs.toString().split(',');
   const shouldReturnHistoricalData = interval && range ? true : false;
 
