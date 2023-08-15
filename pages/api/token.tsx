@@ -25,8 +25,6 @@ const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const token = await getToken({ req });
 
-    console.log({ token });
-
     if (!token) {
       res.status(401).json({
         error: true,

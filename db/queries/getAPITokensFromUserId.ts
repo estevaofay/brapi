@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import { db, serverlessClient } from '~/db';
 import { apiToken, IAPIToken } from '~/db/schemas/tables/apiToken';
 
@@ -21,7 +21,8 @@ export const getAPITokensFromUserId = async ({
     const data = await db
       .select()
       .from(apiToken)
-      .where(eq(apiToken.userId, userId));
+      .where(eq(apiToken.userId, userId))
+      .orderBy(desc(apiToken.createdAt));
 
     const end = performance.now();
     await serverlessClient.clean();
