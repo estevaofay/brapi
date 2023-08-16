@@ -13,8 +13,6 @@ export const Table = ({
   emptyText = 'Sem dados',
   isLoading = false,
 }: ITable) => {
-  console.log({ isLoading });
-
   return (
     <div className="overflow-x-auto w-full">
       <table className="table table-compact w-full text-center bg-slate-800">

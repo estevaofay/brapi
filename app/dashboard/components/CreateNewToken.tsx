@@ -9,7 +9,6 @@ export const CreateNewToken = ({ onNewToken }: ICreateNewToken) => {
     try {
       const { data } = await axios.post('/api/token');
 
-      console.log(data);
       onNewToken(data.shortenedAPIToken);
     } catch (error) {}
   };

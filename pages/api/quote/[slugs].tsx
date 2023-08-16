@@ -55,8 +55,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       })) || {}
     : ({} as Awaited<ReturnType<typeof getAPITokenFromAPITokenId>>);
 
-  console.log({ isAPITokenValid });
-
   if (token && !isAPITokenValid) {
     return res.status(401).json({
       error: true,

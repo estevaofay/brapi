@@ -84,8 +84,6 @@ const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
         userId: token.userId,
       });
 
-      console.log({ apiToken });
-
       const { token: shortenedAPIToken } = shortenAPIToken({
         apiTokenId: apiToken.data.id,
       });

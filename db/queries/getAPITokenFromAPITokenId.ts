@@ -21,7 +21,5 @@ export const getAPITokenFromAPITokenId = async ({
   const end = performance.now();
   await serverlessClient.clean();
 
-  console.log(`isAPITokenActive: ${end - start}ms`);
-
   return data;
 };
