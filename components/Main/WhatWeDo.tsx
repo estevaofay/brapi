@@ -17,7 +17,7 @@ export const WhatWeDo = () => {
           </p>
           <Link
             prefetch={false}
-            href="/docs"
+            href="/dashboard"
             className="text-brand-400 inline-flex items-center mt-4"
             tabIndex={0}
           >

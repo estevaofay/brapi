@@ -8,7 +8,7 @@ export const CTA = () => {
           <h2 className="flex-grow sm:pr-16 text-2xl font-medium title-font text-white">
             Pronto para desenvolver uma aplicação?
           </h2>
-          <Link prefetch={false} href="/docs" className="btn btn-primary">
+          <Link prefetch={false} href="/dashboard" className="btn btn-primary">
             Começar
           </Link>
         </div>

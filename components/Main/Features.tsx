@@ -82,7 +82,7 @@ export const Features = () => {
               </p>
               <Link
                 prefetch={false}
-                href="/docs"
+                href="/dashboard"
                 className="btn btn-link"
                 tabIndex={0}
               >

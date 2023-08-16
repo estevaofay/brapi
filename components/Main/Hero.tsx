@@ -16,7 +16,11 @@ export const Hero = () => {
             Ganhe acesso aos dados de qualquer ação, moeda ou criptomoeda
           </p>
           <div className="flex justify-center">
-            <Link prefetch={false} href="/docs" className="btn btn-primary">
+            <Link
+              prefetch={false}
+              href="/dashboard"
+              className="btn btn-primary"
+            >
               Começar
             </Link>
           </div>
