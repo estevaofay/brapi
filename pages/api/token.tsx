@@ -42,15 +42,15 @@ const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {
         userId: token.userId,
       });
 
-      const encodedAPITokens = apiTokens.data.map((apiToken) => ({
+      const shortenedAPITokens = apiTokens.data.map((apiToken) => ({
         ...apiToken,
-        encodedAPIToken: shortenAPIToken({
+        shortenedAPIToken: shortenAPIToken({
           apiTokenId: apiToken.id,
         }).token,
       }));
 
       res.status(200).json({
-        encodedAPITokens,
+        shortenedAPITokens,
         took: apiTokens.took,
       });
     } catch (error) {
@@ -91,7 +91,10 @@ const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
       });
 
       res.status(200).json({
-        shortenedAPIToken,
+        shortenedAPIToken: {
+          ...apiToken.data,
+          shortenedAPIToken,
+        },
         took: apiToken.took,
       });
     } catch (error) {
