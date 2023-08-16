@@ -7,7 +7,7 @@ export default async function DashboardPage() {
 
   return (
     <DashboardLayout user={session?.user}>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="md:grid  md:grid-cols-3 gap-4 min-h-screen">
         <div className="col-span-2">
           <h2 className="text-2xl font-bold">Seus tokens</h2>
           <TokenTable />
@@ -36,6 +36,13 @@ export default async function DashboardPage() {
             </ul>
           </div>
         </div>
+
+        <a
+          href="/api/auth/signout?callbackUrl=/"
+          className="link flex self-end justify-end col-span-3"
+        >
+          Sair
+        </a>
       </div>
     </DashboardLayout>
   );
