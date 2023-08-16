@@ -34,8 +34,8 @@ export const Table = ({
               ))
             : null}
 
-          {data.map((row) => (
-            <tr>{row}</tr>
+          {data.map((row, index) => (
+            <tr key={index}>{row}</tr>
           ))}
 
           {!isLoading && data.length === 0 ? (

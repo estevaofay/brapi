@@ -43,9 +43,9 @@ export const TokenTable = () => {
   };
 
   const parsedData = useMemo(() => {
-    return tokens.map((token, index) => {
+    return tokens.map((token) => {
       return (
-        <Fragment key={index}>
+        <Fragment key={token.id}>
           <td>
             <input
               type="checkbox"
