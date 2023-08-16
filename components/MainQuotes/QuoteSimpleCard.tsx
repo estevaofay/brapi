@@ -12,7 +12,7 @@ export const QuoteSimpleCard = ({
 }: IQuoteList) => {
   return (
     <NextLink
-      className="flex flex-col justify-center px-4 py-4 bg-base-300 rounded-md flex-grow min-w-[192px]"
+      className="flex flex-col justify-center px-4 py-4 bg-gray-800 rounded-md flex-grow min-w-[192px]"
       role="button"
       href={`/quote/${stock}`}
     >

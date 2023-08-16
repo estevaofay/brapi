@@ -5,7 +5,8 @@ import { validRanges } from '~/constants/validRanges';
 import { validIntervals } from '~/constants/validIntervals';
 import { insertMultipleQuotesAndHistoricalData } from '~/db/mutations/insertMultipleQuotesAndHistoricalData';
 import { createAPIUsage } from '~/db/mutations/createAPIUsage';
-import { decodeAPIToken } from '~/utils/apiToken';
+import { translateAPIToken } from '~/utils/handleAPITokenJWT';
+import { getAPITokenFromAPITokenId } from '~/db/queries/getAPITokenFromAPITokenId';
 
 interface IQuery {
   slugs?: string;
@@ -41,6 +42,23 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({
       error: true,
       message: `Range inválido. Ranges válidos: ${validRanges.join(', ')}`,
+    });
+  }
+
+  const { apiTokenId } = token?.length
+    ? translateAPIToken({ token })
+    : ({} as ReturnType<typeof translateAPIToken>);
+
+  const { active: isAPITokenValid, userId } = apiTokenId
+    ? (await getAPITokenFromAPITokenId({
+        apiTokenId,
+      })) || {}
+    : ({} as Awaited<ReturnType<typeof getAPITokenFromAPITokenId>>);
+
+  if (token && !isAPITokenValid) {
+    return res.status(401).json({
+      error: true,
+      message: 'Token inválido',
     });
   }
 
@@ -91,17 +109,21 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           took: 0,
         };
 
-        if (token) {
-          const { userId } = decodeAPIToken(token);
-
+        if (userId && apiTokenId) {
           await createAPIUsage({
             count: results.length,
             endpoint: 'quote',
-            userId: token,
+            userId: userId,
+            apiTokenId,
           });
         }
 
-        res.setHeader('Cache-Control', 's-maxage=900, stale-while-revalidate');
+        const maxAge = isAPITokenValid ? 600 : 900;
+
+        res.setHeader(
+          'Cache-Control',
+          `s-maxage=${maxAge}, stale-while-revalidate`,
+        );
 
         res.status(200).json({
           results,

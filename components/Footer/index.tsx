@@ -119,7 +119,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="footer py-4 border-t bg-base-200 border-base-300">
+      <div className="footer py-4 border-t bg-zinc-900 border-zinc-800">
         <div className="flex px-5 items-center container flex-col md:flex-row justify-center md:justify-between text-center mx-auto">
           <div className="flex items-center grid-flow-col space-x-2">
             <Image

@@ -47,40 +47,43 @@ const clarityCode = `
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-BR">
-      <Script
-        id="ga"
-        async
-        defer
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-      />
-      <Script
-        id="ga-init"
-        async
-        defer
-        dangerouslySetInnerHTML={{
-          __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${GA_TRACKING_ID}', {
-                page_path: window.location.pathname,
-              });
+      <head>
+        <Script
+          id="ga"
+          async
+          defer
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+        />
+        <Script
+          id="ga-init"
+          async
+          defer
+          dangerouslySetInnerHTML={{
+            __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_TRACKING_ID}', {
+            page_path: window.location.pathname,
+          });
           `,
-        }}
-      />
-      <Script id="ms-clarity" strategy="beforeInteractive">
-        {clarityCode}
-      </Script>
+          }}
+        />
+        <Script id="ms-clarity" strategy="beforeInteractive">
+          {clarityCode}
+        </Script>
 
-      <Script
-        id="tally"
-        async
-        defer
-        src="https://tally.so/widgets/embed.js"
-        strategy="beforeInteractive"
-      />
+        <Script
+          id="tally"
+          async
+          defer
+          src="https://tally.so/widgets/embed.js"
+          strategy="beforeInteractive"
+        />
+      </head>
 
       <body className="bg-gray-900">
+        {/* @ts-expect-error Server Component */}
         <Header />
         {children}
         <Analytics />
