@@ -3,12 +3,35 @@ import { and, eq } from 'drizzle-orm';
 import type { Adapter } from '@auth/core/adapters';
 import { users, sessions, accounts, verificationTokens } from '~/db/schemas';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
+import axios from 'axios';
 
 export function DrizzleAdapter(
   client: NodePgDatabase<Record<string, never>>,
 ): Adapter {
   return {
     async createUser(data) {
+      await axios.post(`${process.env.DISCORD_WEBHOOK_URL}`, {
+        username: 'brapi',
+        avatar_url: 'https://brapi.dev/favicon.png',
+        embeds: [
+          {
+            title: `New User`,
+            description: `**${data.name}** just signed up!`,
+            color: 7419530,
+            fields: [
+              {
+                name: 'Name',
+                value: data.name,
+              },
+              {
+                name: 'Email',
+                value: data.email,
+              },
+            ],
+          },
+        ],
+      });
+
       return await client
         .insert(users)
         .values({ ...data, id: crypto.randomUUID() })

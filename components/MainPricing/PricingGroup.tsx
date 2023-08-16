@@ -16,7 +16,7 @@ const plans = [
   },
   {
     title: 'Startup',
-    price: 'Beta em breve',
+    price: 'Em Beta',
     features: [
       'Suporte premium',
       '100 requisições por minuto',
@@ -25,9 +25,9 @@ const plans = [
       'Dados históricos',
       'Dados de dividendos',
     ],
-    buttonUrl:
-      'https://tally.so#tally-open=mDkq8Z&tally-emoji-text=👋&tally-emoji-animation=wave&layout=modal&width=600',
-    buttonLabel: 'Entrar na lista de espera',
+    // buttonUrl: 'https://tally.so#tally-open=mDkq8Z&tally-emoji-text=👋&tally-emoji-animation=wave&layout=modal&width=600',
+    buttonUrl: '/dashboard',
+    buttonLabel: 'Começar gratuitamente',
     observation: 'Seja um beta tester e no lançamento ganhe 1 mês grátis',
   },
   {

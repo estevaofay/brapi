@@ -1,12 +1,16 @@
 import { db, serverlessClient } from '~/db';
 import { apiUsage, INewAPIUsage } from '~/db/schemas/tables/apiUsage';
 
-type ICreateAPIUsage = Pick<INewAPIUsage, 'userId' | 'endpoint' | 'count'>;
+type ICreateAPIUsage = Pick<
+  INewAPIUsage,
+  'userId' | 'apiTokenId' | 'endpoint' | 'count'
+>;
 
 export const createAPIUsage = async ({
   count,
   endpoint,
   userId,
+  apiTokenId,
 }: ICreateAPIUsage) => {
   try {
     const start = performance.now();
@@ -16,6 +20,7 @@ export const createAPIUsage = async ({
       .insert(apiUsage)
       .values({
         userId,
+        apiTokenId,
         endpoint,
         count,
       })

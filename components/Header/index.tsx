@@ -1,7 +1,11 @@
+import { getServerSession } from 'next-auth';
+
 import Link from 'next/link';
 import { SearchInput } from '~/components/SearchInput';
 
-const Header = () => {
+const Header = async () => {
+  const session = await getServerSession();
+
   return (
     <div className="bg-gray-900 pb-40 md:pb-20 relative min-w-full">
       <div className="absolute bg-brand-400/80 md:bg-brand-400/20 w-96 h-96 max-w-full blur-3xl rounded-full left-1/2 translate -translate-x-1/2 -translate-y-3/4 md:-left-48 md:-top-48 md:-translate-x-0 md:-translate-y-0 overflow-hidden z-10" />
@@ -112,21 +116,23 @@ const Header = () => {
 
             <Link
               prefetch={false}
-              href="/docs"
+              href="/dashboard"
               className="btn btn-primary hidden md:flex"
             >
-              Começar
-              <svg
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                className="w-4 h-4 ml-1"
-                viewBox="0 0 24 24"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7"></path>
-              </svg>
+              {session ? 'Dashboard' : 'Entrar'}
+              {!session && (
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  className="w-4 h-4 ml-1"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              )}
             </Link>
           </nav>
         </div>

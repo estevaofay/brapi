@@ -24,6 +24,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }, {}) as ILooseObject;
 
   try {
+    if (Object.entries(cleanFormData || {}).length === 0) {
+      // to prevent empty webhook calls
+      return res.status(200).json({ message: 'ok' });
+    }
+
     await axios.post(`${process.env.DISCORD_WEBHOOK_URL}`, {
       username: 'brapi',
       avatar_url: 'https://brapi.dev/favicon.png',

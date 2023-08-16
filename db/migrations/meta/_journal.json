@@ -141,6 +141,13 @@
       "when": 1692058081524,
       "tag": "0019_wet_marvel_boy",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "5",
+      "when": 1692074668084,
+      "tag": "0020_sturdy_lucky_pierre",
+      "breakpoints": true
     }
   ]
 }
