@@ -83,6 +83,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
 
       <body className="bg-gray-900">
+        {/* @ts-expect-error Server Component */}
         <Header />
         {children}
         <Analytics />
