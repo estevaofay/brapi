@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
@@ -17,7 +17,7 @@ const pool = new Pool({
 
 const db = drizzle(pool);
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   adapter: DrizzleAdapter(db),
   providers: [
     GoogleProvider({
@@ -50,4 +50,6 @@ export default NextAuth({
     },
   },
   debug: process.env.NODE_ENV === 'development',
-});
+};
+
+export default NextAuth(authOptions);

@@ -2,9 +2,10 @@ import { getServerSession } from 'next-auth';
 
 import Link from 'next/link';
 import { SearchInput } from '~/components/SearchInput';
+import { authOptions } from '~/pages/api/auth/[...nextauth]';
 
 const Header = async () => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   return (
     <div className="bg-gray-900 pb-40 md:pb-20 relative min-w-full">

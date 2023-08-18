@@ -2,9 +2,10 @@ import { getServerSession } from 'next-auth';
 import DashboardLayout from '~/app/dashboard/components/Layout';
 import { TokenTable } from '~/app/dashboard/components/TokenTable';
 import { UsageChart } from '~/app/dashboard/components/UsageChart';
+import { authOptions } from '~/pages/api/auth/[...nextauth]';
 
 export default async function DashboardPage() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   return (
     <DashboardLayout user={session?.user}>
