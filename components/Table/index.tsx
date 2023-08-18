@@ -25,7 +25,7 @@ export const Table = ({
         </thead>
         <tbody>
           {isLoading
-            ? Array.from(Array(10).keys()).map((i) => (
+            ? Array.from(Array(3).keys()).map((i) => (
                 <tr key={i}>
                   <td colSpan={headers.length}>
                     <progress className="progress" />
