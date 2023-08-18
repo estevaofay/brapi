@@ -4,18 +4,7 @@ import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import { DrizzleAdapter } from '~/db/adapters/drizzle';
 
-import { Pool } from 'pg';
-import { drizzle } from 'drizzle-orm/node-postgres';
-
-const pool = new Pool({
-  user: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST,
-  database: process.env.POSTGRES_DB,
-  password: process.env.POSTGRES_PASSWORD,
-  port: Number(process.env.POSTGRES_PORT) || 5432,
-});
-
-const db = drizzle(pool);
+import { db } from '~/db';
 
 export const authOptions: NextAuthOptions = {
   adapter: DrizzleAdapter(db),

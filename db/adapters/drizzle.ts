@@ -4,10 +4,10 @@ import type { Adapter } from '@auth/core/adapters';
 import { users, sessions, accounts, verificationTokens } from '~/db/schemas';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import axios from 'axios';
+import * as schema from '../schemas';
+import { serverlessClient } from '~/db';
 
-export function DrizzleAdapter(
-  client: NodePgDatabase<Record<string, never>>,
-): Adapter {
+export function DrizzleAdapter(client: NodePgDatabase<typeof schema>): Adapter {
   return {
     async createUser(data) {
       await axios.post(`${process.env.DISCORD_WEBHOOK_URL}`, {
@@ -32,35 +32,61 @@ export function DrizzleAdapter(
         ],
       });
 
-      return await client
+      await serverlessClient.connect();
+
+      const dbData = await client
         .insert(users)
         .values({ ...data, id: crypto.randomUUID() })
         .returning()
         .then((res) => res[0] ?? null);
+
+      await serverlessClient.clean();
+
+      return dbData;
     },
     async getUser(data) {
-      return await client
+      await serverlessClient.connect();
+
+      const dbData = client
         .select()
         .from(users)
         .where(eq(users.id, data))
         .then((res) => res[0] ?? null);
+
+      await serverlessClient.clean();
+
+      return dbData;
     },
     async getUserByEmail(data) {
-      return await client
+      await serverlessClient.connect();
+
+      const dbData = client
         .select()
         .from(users)
         .where(eq(users.email, data))
         .then((res) => res[0] ?? null);
+
+      await serverlessClient.clean();
+
+      return dbData;
     },
     async createSession(data) {
-      return await client
+      await serverlessClient.connect();
+
+      const dbData = await client
         .insert(sessions)
         .values(data)
         .returning()
         .then((res) => res[0]);
+
+      await serverlessClient.clean();
+
+      return dbData;
     },
     async getSessionAndUser(data) {
-      return await client
+      await serverlessClient.connect();
+
+      const dbData = await client
         .select({
           session: sessions,
           user: users,
@@ -69,33 +95,53 @@ export function DrizzleAdapter(
         .where(eq(sessions.sessionToken, data))
         .innerJoin(users, eq(users.id, sessions.userId))
         .then((res) => res[0] ?? null);
+
+      await serverlessClient.clean();
+
+      return dbData;
     },
     async updateUser(data) {
       if (!data.id) {
         throw new Error('No user id.');
       }
 
-      return await client
+      await serverlessClient.connect();
+
+      const dbData = await client
         .update(users)
         .set(data)
         .where(eq(users.id, data.id))
         .returning()
         .then((res) => res[0]);
+
+      await serverlessClient.clean();
+
+      return dbData;
     },
     async updateSession(data) {
-      return await client
+      await serverlessClient.connect();
+
+      const dbData = await client
         .update(sessions)
         .set(data)
         .where(eq(sessions.sessionToken, data.sessionToken))
         .returning()
         .then((res) => res[0]);
+
+      await serverlessClient.clean();
+
+      return dbData;
     },
     async linkAccount(rawAccount) {
+      await serverlessClient.connect();
+
       const updatedAccount = await client
         .insert(accounts)
         .values(rawAccount)
         .returning()
         .then((res) => res[0]);
+
+      await serverlessClient.clean();
 
       // Drizzle will return `null` for fields that are not defined.
       // However, the return type is expecting `undefined`.
@@ -113,6 +159,8 @@ export function DrizzleAdapter(
       return account;
     },
     async getUserByAccount(account) {
+      await serverlessClient.connect();
+
       const dbAccount =
         (await client
           .select()
@@ -126,6 +174,8 @@ export function DrizzleAdapter(
           .leftJoin(users, eq(accounts.userId, users.id))
           .then((res) => res[0])) ?? null;
 
+      await serverlessClient.clean();
+
       if (!dbAccount) {
         return null;
       }
@@ -133,24 +183,35 @@ export function DrizzleAdapter(
       return dbAccount.User;
     },
     async deleteSession(sessionToken) {
+      await serverlessClient.connect();
       const session = await client
         .delete(sessions)
         .where(eq(sessions.sessionToken, sessionToken))
         .returning()
         .then((res) => res[0] ?? null);
 
+      await serverlessClient.clean();
+
       return session;
     },
     async createVerificationToken(token) {
-      return await client
+      await serverlessClient.connect();
+
+      const dbData = await client
         .insert(verificationTokens)
         .values(token)
         .returning()
         .then((res) => res[0]);
+
+      await serverlessClient.clean();
+
+      return dbData;
     },
     async useVerificationToken(token) {
       try {
-        return await client
+        await serverlessClient.connect();
+
+        const dbData = await client
           .delete(verificationTokens)
           .where(
             and(
@@ -160,18 +221,30 @@ export function DrizzleAdapter(
           )
           .returning()
           .then((res) => res[0] ?? null);
+
+        await serverlessClient.clean();
+
+        return dbData;
       } catch (err) {
         throw new Error('No verification token found.');
       }
     },
     async deleteUser(id) {
-      await client
+      await serverlessClient.connect();
+
+      const dbData = await client
         .delete(users)
         .where(eq(users.id, id))
         .returning()
         .then((res) => res[0] ?? null);
+
+      await serverlessClient.clean();
+
+      return dbData;
     },
     async unlinkAccount(account) {
+      await serverlessClient.connect();
+
       const { type, provider, providerAccountId, userId } = await client
         .delete(accounts)
         .where(
@@ -182,6 +255,8 @@ export function DrizzleAdapter(
         )
         .returning()
         .then((res) => res[0] ?? null);
+
+      await serverlessClient.clean();
 
       return { provider, type, providerAccountId, userId };
     },
