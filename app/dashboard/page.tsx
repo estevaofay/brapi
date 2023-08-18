@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth';
 import DashboardLayout from '~/app/dashboard/components/Layout';
 import { TokenTable } from '~/app/dashboard/components/TokenTable';
+import { UsageChart } from '~/app/dashboard/components/UsageChart';
 
 export default async function DashboardPage() {
   const session = await getServerSession();
@@ -8,14 +9,18 @@ export default async function DashboardPage() {
   return (
     <DashboardLayout user={session?.user}>
       <div className="md:grid  md:grid-cols-3 gap-4 min-h-screen">
-        <div className="col-span-2">
-          <h2 className="text-2xl font-bold">Seus tokens</h2>
-          <TokenTable />
+        <div className="flex flex-col col-span-2 gap-8">
+          <div className="flex flex-col gap-2">
+            <h2 className="text-2xl font-bold">Seus tokens</h2>
+            <TokenTable />
+          </div>
+
+          {/* @ts-expect-error Server Component */}
+          <UsageChart userId={session.user.id} />
         </div>
 
         <div className="col-span-1">
           <div className="p-4">
-            {/* todo: add api usage cards here */}
             <h2 className="text-2xl font-bold">Resumo</h2>
             <ul className="list-disc pl-4">
               <li>
