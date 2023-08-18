@@ -10,6 +10,22 @@ interface ISendGridEmail {
   };
 }
 
+// Example
+// const emails = [{
+//   email: 'test@email.com',
+//   username: 'Test',
+// }]
+// const messages = emails.map((email) => {
+//   return {
+//     to: email.email,
+//     templateId: 'd-af3b25ffbfafbfb43f2b42sesfs321',
+//     dynamicTemplateData: {
+//       username: email.username,
+//     },
+//   };
+// });
+// await Promise.all(messages.map((message) => sendSendGridEmail(message)));
+
 export const sendSendGridEmail = async (msg: ISendGridEmail) => {
   try {
     await sgMail.send({
